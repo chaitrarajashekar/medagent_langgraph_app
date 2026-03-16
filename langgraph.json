@@ -1,0 +1,7 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "medagent": "./graph.py:medagent_graph"
+  },
+  "env": ".env"
+}

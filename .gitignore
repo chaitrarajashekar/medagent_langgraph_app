@@ -1,0 +1,27 @@
+﻿# Virtual environment — never commit this
+venv/
+.venv/
+env/
+
+# Environment variables — never commit API keys
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ChromaDB vector database
+chroma_medagent_v4/
+chroma_medagent_docs/
+chroma_medagent_complex/
+chroma_fallback/
+
+# Logs
+*.jsonl
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
