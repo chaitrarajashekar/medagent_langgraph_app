@@ -83,20 +83,20 @@ def run_pipeline(initial_state):
     initial_state["run_id"]   = run_id
     initial_state["messages"] = []
 
-    with langwatch.trace(name="MedAgentPipeline") as trace:
-        # span.input and span.output are direct attributes (confirmed from dir())
-        trace.input = (
-            f"Patient: {initial_state.get('patient_age','')}y | "
-            f"Conditions: {initial_state.get('patient_conditions','')} | "
-            f"Medications: {initial_state.get('medications','')}"
+    with langwatch.trace(name="MedAgentPipeline") as t:
+        t.update(
+            input=f"Patient {initial_state.get('patient_age','')}y | "
+                  f"Meds: {initial_state.get('medications','')}",
         )
         result = medagent_graph.invoke(initial_state)
-        trace.output = result.get("final_report", "")[:500]
+        t.update(
+            output=result.get("final_report","")[:300],
+        )
 
     return result, run_id
 
 # ── Endpoints ─────────────────────────────────────────────────────────
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 def root():
     return {
         "service":          "MedAgent AI v4",
@@ -109,7 +109,7 @@ def root():
     }
 
 
-@app.get("/health")
+@app.api_route("/health", methods=["GET", "HEAD"])
 def health():
     key_loaded = bool(os.getenv("OPENAI_API_KEY"))
     lw_key     = bool(os.getenv("LANGWATCH_API_KEY"))
