@@ -1,0 +1,42 @@
+DOCUMENT: Warfarin + Aspirin Drug Interaction
+SOURCE: BNF 2024 / CMAJ Population Study (Delaney et al.) / Circulation AHA Guidelines 2021
+SEVERITY: MAJOR
+DRUG_PAIR: warfarin + aspirin
+
+INTERACTION SUMMARY
+Concurrent use of warfarin and aspirin significantly increases the risk of major haemorrhage, including gastrointestinal and intracranial bleeding. This is one of the most clinically significant and well-documented drug interactions in clinical practice. The combination must only be used when there is a compelling clinical indication and with close monitoring.
+
+MECHANISM
+Two distinct and additive mechanisms operate simultaneously:
+1. PHARMACODYNAMIC: Warfarin inhibits hepatic synthesis of Vitamin K-dependent clotting factors (II, VII, IX, X) and anticoagulant proteins C and S, reducing thrombin generation and prolonging prothrombin time (PT/INR). Aspirin irreversibly inhibits cyclooxygenase-1 (COX-1) in platelets, blocking thromboxane A2 synthesis and preventing platelet aggregation for the lifespan of the platelet (7-10 days). These two mechanisms act on different parts of the coagulation cascade and their effects are additive, not merely overlapping.
+2. PHARMACOKINETIC (high-dose aspirin only): High-dose aspirin (>3g/day) has a direct hypoprothrombinemic effect by reducing functional Factor VII. This is not relevant at the low-dose aspirin (75-100mg) commonly used in cardiovascular patients.
+
+CLINICAL EVIDENCE
+- Population-based cohort study (Delaney et al., CMAJ 2007, n=44,199 cases/controls): Prescribing warfarin with aspirin was associated with an adjusted rate ratio of 6.48 (95% CI 4.25-9.87) for gastrointestinal bleeding compared to warfarin alone.
+- Systematic review and meta-analysis (Wang et al., BJCP 2021, 478,334 patients): Concurrent use of aspirin and warfarin significantly increased clinically relevant bleeding (OR 1.50; 95% CI 1.29-1.74) compared to warfarin alone.
+- AHA/ACC Guidelines (Circulation 2021): Triple therapy (aspirin + clopidogrel + anticoagulant) should not exceed 30 days and aspirin dose should not exceed 100mg. For AF patients with stable coronary disease, anticoagulation alone (warfarin or DOAC) is preferred.
+
+DOSE CONSIDERATIONS
+- Risk is present at ALL doses of aspirin including low-dose (75-100mg daily)
+- Risk does not require elevated INR — additive antihaemostatic effect occurs even within therapeutic INR range
+- For a 72-year-old patient: Advanced age is an independent risk factor for both bleeding and thromboembolism. Renal function should be assessed. HAS-BLED score should be calculated.
+
+CLINICAL ACTION
+- Dual therapy (warfarin + aspirin) should only continue if explicitly advised by a cardiologist/specialist
+- If combination is necessary: add proton pump inhibitor (e.g. omeprazole 20mg daily) to reduce GI bleeding risk by approximately 70%
+- Increase INR monitoring frequency to weekly when combination is initiated
+- Target INR should be maintained at lower end of therapeutic range (2.0-2.5 for AF) where possible
+- Educate patient on bleeding signs: unusual bruising, blood in urine/stool, prolonged bleeding from cuts, sudden severe headache
+- Review indication for dual therapy at every clinic visit — if aspirin is for secondary prevention and anticoagulation is adequate, aspirin may be discontinued
+
+PATIENT POPULATION CONSIDERATIONS
+- Atrial fibrillation: Warfarin alone provides adequate stroke prevention. Aspirin should NOT be added unless patient has concurrent ACS or recent coronary stent
+- Post-PCI patients: Minimum dual antiplatelet + anticoagulant duration (30 days), then switch to anticoagulation + single antiplatelet
+- Age >65: CHA2DS2-VASc and HAS-BLED scores should both be formally calculated
+
+ALTERNATIVES
+- If aspirin is being used for AF stroke prevention: Warfarin alone is superior (BAFTA trial)
+- If aspirin is being used for secondary CV prevention: Discuss with cardiologist whether anticoagulation alone is sufficient
+- DOAC (apixaban, rivaroxaban) + aspirin carries lower bleeding risk than warfarin + aspirin (ARISTOTLE, ROCKET-AF sub-analyses)
+
+DISCLAIMER: This document is for clinical reference only. Drug interaction management must be individualised by a qualified clinician or pharmacist.

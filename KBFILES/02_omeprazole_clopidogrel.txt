@@ -1,0 +1,45 @@
+DOCUMENT: Omeprazole + Clopidogrel Drug Interaction
+SOURCE: EMA CHMP Safety Communication 2010 / MHRA Drug Safety Update 2010 / COGENT Trial (NEJM 2010) / PMC Review (Cuisset et al.)
+SEVERITY: MAJOR
+DRUG_PAIR: omeprazole + clopidogrel
+
+INTERACTION SUMMARY
+Omeprazole significantly reduces the antiplatelet efficacy of clopidogrel through competitive inhibition of CYP2C19, the hepatic enzyme responsible for converting the clopidogrel prodrug into its active thiol metabolite. This pharmacokinetic interaction can reduce clopidogrel's platelet inhibition by approximately 40-50%, potentially increasing the risk of adverse cardiovascular events in patients requiring antiplatelet therapy (e.g. post-PCI, ACS).
+
+MECHANISM
+Clopidogrel is a prodrug that requires two-step hepatic bioactivation. The second step — the primary conversion step — is predominantly mediated by CYP2C19 (accounting for approximately 45% of activation). Omeprazole is a potent, dose-dependent competitive inhibitor of CYP2C19. When omeprazole is co-administered:
+- AUC of clopidogrel active metabolite decreases by approximately 46%
+- Maximum platelet inhibition decreases by approximately 47%
+- Platelet reactivity (measured by ADP-induced aggregation) increases significantly
+- This leaves the patient in a state of relative clopidogrel resistance
+
+CYP2C19 pharmacogenomic note: Patients who are CYP2C19 poor metabolisers (approximately 2-14% of population depending on ethnicity; higher in Asian populations at 15-25%) already have reduced clopidogrel activation. In these patients, omeprazole co-administration has an additive detrimental pharmacogenomic effect. The EMA has specifically noted that the EU population has higher rates of CYP2C19 poor/intermediate metabolisers than the US population.
+
+REGULATORY ACTIONS
+- EMA CHMP (2010): Issued recommendation that omeprazole and esomeprazole should not be used with clopidogrel due to significant reduction in antiplatelet effect. Recommendation to use pantoprazole instead.
+- MHRA Drug Safety Update (2010): Confirmed EMA recommendation. Advised clinicians to use pantoprazole (a less potent CYP2C19 inhibitor) or another PPI with less CYP2C19 inhibitory activity.
+- FDA (2010): Required label changes. Advised against co-administration. Recommended pantoprazole as preferred PPI if gastroprotection is required.
+
+CLINICAL EVIDENCE
+- COGENT Trial (NEJM 2010, n=3,761): Randomised trial of clopidogrel/omeprazole combination vs clopidogrel alone in patients requiring dual antiplatelet therapy. GI events significantly reduced (1.1% vs 2.9%, p<0.001) with combination. Cardiovascular events were similar — however, the trial was underpowered for CV endpoint (stopped early at 55/143 planned GI events) and cannot exclude a clinically meaningful cardiovascular difference.
+- Multiple pharmacodynamic studies demonstrate 40-50% reduction in platelet inhibition with omeprazole co-administration.
+
+DOSE CONSIDERATIONS
+- Effect is dose-dependent: omeprazole 20mg and 80mg both significantly inhibit CYP2C19, with higher doses producing greater inhibition
+- Pantoprazole 40mg has significantly less CYP2C19 inhibitory activity and is the preferred alternative
+- Timing: Taking PPI and clopidogrel at different times does NOT reduce the interaction — CYP2C19 inhibition is sustained
+
+CLINICAL ACTION
+- For post-PCI patients (65y, recent stent): This is a high-risk combination requiring urgent review
+- Switch omeprazole to pantoprazole 40mg daily — reduces but does not eliminate CYP2C19 interaction
+- If pantoprazole is unavailable, ranitidine (H2 antagonist) is an alternative with no CYP2C19 interaction
+- Do not use esomeprazole — it has the SAME or GREATER CYP2C19 inhibitory effect as omeprazole
+- Lansoprazole and rabeprazole have intermediate CYP2C19 inhibitory activity — less preferred than pantoprazole
+
+ALTERNATIVES TO OMEPRAZOLE
+Preferred: Pantoprazole 40mg daily — least CYP2C19 inhibitory activity among PPIs
+Acceptable: Ranitidine 150mg twice daily (no CYP interaction)
+Avoid: Omeprazole, esomeprazole (strong CYP2C19 inhibitors)
+Acceptable with caution: Lansoprazole, rabeprazole (moderate inhibitors)
+
+DISCLAIMER: This document is for clinical reference only. Drug interaction management must be individualised by a qualified clinician or pharmacist.

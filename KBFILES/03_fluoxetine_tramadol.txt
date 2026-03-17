@@ -1,0 +1,57 @@
+DOCUMENT: Fluoxetine + Tramadol Drug Interaction — Serotonin Syndrome Risk
+SOURCE: FDA Tramadol Label (2023) / Mikkelsen et al. BCPT 2023 / PMC Systematic Review / MHRA Yellow Card Database
+SEVERITY: MAJOR
+DRUG_PAIR: fluoxetine + tramadol
+
+INTERACTION SUMMARY
+The combination of fluoxetine (SSRI) and tramadol (opioid/serotonin-norepinephrine reuptake inhibitor) creates a dual pharmacodynamic and pharmacokinetic interaction that significantly increases the risk of serotonin syndrome — a potentially life-threatening condition. This is one of the most commonly reported SSRI-opioid drug interactions and is listed as a black box warning concern on the FDA tramadol label. Concomitant use of SSRI and tramadol is the most frequent cause of serotonin syndrome reported in pharmacovigilance databases.
+
+MECHANISM — TWO SIMULTANEOUS INTERACTIONS
+1. PHARMACODYNAMIC (serotonin accumulation):
+   - Fluoxetine inhibits the serotonin reuptake transporter (SERT), increasing synaptic serotonin
+   - Tramadol is a weak mu-opioid agonist AND inhibits reuptake of both serotonin and norepinephrine (SNRI-like activity)
+   - Both drugs increase synaptic serotonin via the same mechanism (SERT inhibition), producing an additive-to-synergistic increase in serotonergic neurotransmission
+   - Together: excessive 5-HT1A and 5-HT2A receptor stimulation in both central and peripheral nervous systems
+
+2. PHARMACOKINETIC (increased tramadol exposure):
+   - Tramadol is metabolised to its active opioid metabolite (O-desmethyltramadol, M1) by CYP2D6
+   - Fluoxetine is a potent CYP2D6 inhibitor (Ki approximately 0.9 μM)
+   - Fluoxetine inhibition of CYP2D6 increases tramadol plasma concentration and reduces M1 formation — paradoxically, higher tramadol levels (with less opioid but more SNRI effect) amplify serotonergic activity
+   - This creates an augmentative pharmacokinetic-pharmacodynamic cycle: more tramadol → more serotonin reuptake inhibition → higher serotonin toxicity risk
+
+SEROTONIN SYNDROME — CLINICAL FEATURES
+The Hunter Serotonin Toxicity Criteria diagnostic triad:
+- NEUROMUSCULAR: Clonus (inducible, spontaneous, or ocular), hyperreflexia, myoclonus, tremor, ataxia
+- AUTONOMIC: Hyperthermia, diaphoresis, tachycardia, hypertension, diarrhoea
+- ALTERED MENTAL STATUS: Agitation, anxiety, confusion
+Severity spectrum: Mild (tremor, tachycardia) → Moderate (hyperthermia, clonus) → Severe (hyperthermia >41°C, rigidity, rhabdomyolysis, renal failure, death)
+
+CLINICAL EVIDENCE
+- FDA tramadol label (2023): Black box warning — "Serotonin Syndrome: May be life-threatening. Can occur with concomitant use of serotonergic drugs." Fluoxetine explicitly listed.
+- Mikkelsen et al. (BCPT 2023): Systematic review — SSRI + tramadol is the most frequent cause of serotonin syndrome. Fluoxetine + tramadol documented in multiple case reports since 1999 (Kesavan & Sobala, JRSM).
+- Park et al. (JPP 2014): Review of 10 case reports — all involved therapeutic doses. 8/10 cases resolved within 24-48 hours of drug withdrawal.
+- Dutch hospital study (BMJ Open 2019): Only 20-30% of prescribers were aware of this interaction — underreporting and under-recognition are major clinical problems.
+- MHRA Yellow Card Database: Multiple confirmed cases of serotonin syndrome with fluoxetine + tramadol combination.
+
+DOSE CONSIDERATIONS
+- Risk exists at ALL therapeutic doses — serotonin syndrome has been reported with standard doses of both drugs
+- CYP2D6 ultrarapid metabolisers (higher tramadol-to-M1 conversion): slightly lower serotonergic risk but higher respiratory depression risk
+- CYP2D6 poor metabolisers (reduced M1 formation): HIGHER serotonergic risk as more tramadol accumulates in its SNRI form
+- Renal impairment: Tramadol and M1 accumulate, increasing risk further
+- Elderly patients: CYP2D6 activity decreases with age, increasing tramadol accumulation
+
+CLINICAL ACTION
+- AVOID combination unless no clinically appropriate alternative exists
+- If pain management is required in a patient on fluoxetine: consider non-serotonergic analgesics (paracetamol, NSAIDs if not contraindicated, codeine with caution, low-dose morphine)
+- If tramadol is considered essential: use lowest effective dose, start at 50mg (not 100mg), monitor for serotonin syndrome symptoms for 24 hours after initiation
+- Discontinue tramadol immediately if any features of serotonin syndrome develop
+- Note: Fluoxetine has a 5-week washout period before starting an MAOI — same pharmacological caution applies to tramadol
+- If serotonin syndrome develops: stop both drugs, supportive care, cyproheptadine (5-HT2A antagonist) for moderate-severe cases, ICU for severe hyperthermia >41°C
+
+SAFER ALTERNATIVES FOR PAIN MANAGEMENT IN PATIENTS ON FLUOXETINE
+First choice: Paracetamol (acetaminophen) — no serotonergic activity
+Second choice: Low-dose codeine (also CYP2D6 substrate — monitor, but no serotonin reuptake inhibition)
+Third choice: Morphine or oxycodone (not CYP2D6 substrates, minimal serotonergic activity)
+Avoid: Tramadol, pethidine (meperidine), fentanyl at high doses, methadone (all have serotonergic properties)
+
+DISCLAIMER: This document is for clinical reference only. Drug interaction management must be individualised by a qualified clinician or pharmacist.

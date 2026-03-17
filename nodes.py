@@ -67,15 +67,12 @@ def _cache_stats() -> dict:
 # This prevents the "already setup" conflict and 401 errors
 _lw_key = os.getenv("LANGWATCH_API_KEY", "")
 
-# ── KB docs — same as in the working LangFlow components ─────────────
-KB_DOCS = [
-    {"text": "Warfarin + aspirin: MAJOR interaction. Warfarin inhibits Vitamin K clotting factors (II,VII,IX,X). Aspirin irreversibly inhibits COX-1, reducing thromboxane A2-mediated platelet aggregation. Additive effect dramatically raises GI and intracranial bleeding risk. If unavoidable: add PPI, increase INR monitoring frequency. Source: BNF + Clinical Pharmacology.", "meta": {"drugs": "warfarin,aspirin", "severity": "MAJOR"}},
-    {"text": "Warfarin + ibuprofen: MAJOR. NSAIDs inhibit COX-1/COX-2, reduce gastric mucosal protection, may displace warfarin from protein binding. Avoid; use paracetamol instead. Source: BNF.", "meta": {"drugs": "warfarin,ibuprofen", "severity": "MAJOR"}},
-    {"text": "Omeprazole + clopidogrel: MAJOR. Omeprazole inhibits CYP2C19, reducing clopidogrel activation by up to 47%. Risk of stent thrombosis in post-ACS patients. Switch to pantoprazole. Source: ESC Guidelines.", "meta": {"drugs": "omeprazole,clopidogrel", "severity": "MAJOR"}},
-    {"text": "Fluoxetine + tramadol: MAJOR — serotonin syndrome risk. Fluoxetine inhibits SERT and CYP2D6. Avoid combination. Source: FDA MedWatch.", "meta": {"drugs": "fluoxetine,tramadol", "severity": "MAJOR"}},
-    {"text": "Metformin + alcohol: MODERATE. Heavy alcohol with metformin increases lactic acidosis risk. Source: MHRA.", "meta": {"drugs": "metformin,alcohol", "severity": "MODERATE"}},
-    {"text": "Severity definitions — MAJOR: avoid combination. MODERATE: use with caution. MINOR: clinically minimal.", "meta": {"drugs": "general", "severity": "INFO"}},
-]
+# ── KB docs path ─────────────────────────────────────────────────────
+# Real clinical KB documents live in KBFILES/ folder (7 files).
+# Set KB_DIR env var to override — defaults to ./KBFILES
+# These replace the old hardcoded KB_DOCS summaries.
+# No inline fallback — if files are missing, a clear error is logged.
+KB_DIR_DEFAULT = "./KBFILES"
 
 # ── LLM singleton ─────────────────────────────────────────────────────
 def get_llm(max_tokens=1200, callbacks=None):
@@ -109,34 +106,89 @@ def get_llm(max_tokens=1200, callbacks=None):
 _db = None
 
 def get_chromadb():
+    """
+    Builds ChromaDB vector store from clinical KB documents in ./KBFILES
+
+    Document loading priority:
+    1. KB_DIR env var (if set)
+    2. ./KBFILES  (default — where the 7 peer-reviewed clinical docs live)
+   
+
+    Files loaded:
+    01_warfarin_aspirin.txt          — BNF + CMAJ evidence
+    02_omeprazole_clopidogrel.txt    — EMA CHMP + COGENT trial
+    03_fluoxetine_tramadol.txt       — FDA label + Mikkelsen 2023
+    04_simvastatin_clarithromycin.txt — FDA Zocor label + MHRA SPS
+    05_lithium_ibuprofen.txt         — BNF 2024 + MHRA guidance
+    06_general_cyp450_interactions.txt — FDA Clinical Drug Interaction Guidance
+    07_anticoagulation_management.txt  — NHS Derbyshire + BCSH Guidelines
+    """
     global _db
     if _db:
         return _db
-    kb_dir    = os.getenv("KB_DIR", "./medagent_kb_docs")
-    txt_files = glob.glob(f"{kb_dir}/*.txt")
+
+    # Try KB_DIR env var first, then KBFILES, then legacy path
+    kb_dir = "./KBFILES"  # default path
+    if not kb_dir:
+        for candidate in ["./KBFILES"]:
+            if glob.glob(f"{candidate}/*.txt"):
+                kb_dir = candidate
+                break
+        if not kb_dir:
+            kb_dir = "./KBFILES"   # default even if empty — error logged below
+
+    txt_files = sorted(glob.glob(f"{kb_dir}/*.txt"))
     raw_docs  = []
+
+    print(f"   📚 Loading KB from: {kb_dir} ({len(txt_files)} files found)")
+
     for fpath in txt_files:
         try:
             with open(fpath, encoding="utf-8") as f:
-                raw_docs.append(Document(
-                    page_content=f.read(),
-                    metadata={"source": os.path.basename(fpath)}
-                ))
+                text = f.read()
+            raw_docs.append(Document(
+                page_content=text,
+                metadata={
+                    "source":   os.path.basename(fpath),
+                    "filepath": fpath,
+                    "chars":    len(text),
+                }
+            ))
+            print(f"   ✅ Loaded: {os.path.basename(fpath)} ({len(text):,} chars)")
         except Exception as e:
-            print(f"KB load error {fpath}: {e}")
+            print(f"   ❌ KB load error {fpath}: {e}")
+
     if not raw_docs:
-        # Fall back to inline KB — same as working LangFlow component
-        raw_docs = [Document(page_content=d["text"], metadata=d["meta"]) for d in KB_DOCS]
+        # Hard error — no KB files found and no inline fallback
+        # This is intentional: we want to know if KBFILES is missing
+        raise FileNotFoundError(
+            f"No KB .txt files found in '{kb_dir}'. "
+            f"Ensure ./KBFILES folder exists with the 7 clinical documents. "
+            f"Set KB_DIR env var to override the path."
+        )
+
+    print(f"   📖 Loaded {len(raw_docs)} KB documents — chunking...")
+
     chunks = RecursiveCharacterTextSplitter(
-        chunk_size=500, chunk_overlap=50
+        chunk_size=500,
+        chunk_overlap=50,
+        separators=["\n\n", "\n", ". ", " ", ""],
     ).split_documents(raw_docs)
+
+    print(f"   🔪 {len(chunks)} chunks created from {len(raw_docs)} documents")
+
     emb = OpenAIEmbeddings(
         model="text-embedding-3-small",
         api_key=os.getenv("OPENAI_API_KEY", "")
     )
-    _db = Chroma.from_documents(chunks, emb,
+
+    _db = Chroma.from_documents(
+        chunks, emb,
         collection_name="medagent_openai",
-        persist_directory="./chroma_medagent_openai")
+        persist_directory="./chroma_medagent_openai",
+    )
+
+    print(f"   ✅ ChromaDB ready — {len(chunks)} chunks embedded")
     return _db
 
 # ── Parse medication string ───────────────────────────────────────────
@@ -825,9 +877,8 @@ CLINICAL ACTION:
 - [point 2]
 - [point 3]
 PATIENT ADVICE: [2-3 plain language sentences]
-SOURCES: KB (BNF/ESC) + {authorities_called}
-
-⚠️ DISCLAIMER: AI-generated. Research only. Not medical advice."""
+SOURCES: {authorities_called}
+"""
 
 
 OVERALL_PROMPT = """Summarise this multi-drug interaction assessment.

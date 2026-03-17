@@ -1,0 +1,42 @@
+DOCUMENT: Lithium + Ibuprofen (NSAIDs) Drug Interaction
+SOURCE: BNF 2024 / Clinical Pharmacology Reviews / MHRA Guidance
+SEVERITY: MAJOR
+DRUG_PAIR: lithium + ibuprofen
+
+INTERACTION SUMMARY
+NSAIDs, including ibuprofen, can significantly increase lithium plasma concentrations — potentially to toxic levels — through reduced renal lithium clearance. Lithium has a narrow therapeutic index (therapeutic range 0.6-1.2 mmol/L; toxic above 1.5 mmol/L). This interaction can cause serious lithium toxicity and is considered a major clinical drug interaction by BNF and MHRA. NSAIDs should generally be avoided in patients taking lithium.
+
+MECHANISM
+Lithium is eliminated almost entirely by the kidneys. Renal lithium reabsorption closely parallels sodium reabsorption — they compete for the same proximal tubular reabsorption transporters. NSAIDs inhibit prostaglandin synthesis via COX-1 and COX-2 inhibition:
+- Prostaglandins (particularly PGE2) normally inhibit sodium (and lithium) reabsorption in the proximal tubule
+- NSAID-mediated prostaglandin inhibition → increased sodium (and lithium) reabsorption
+- Result: lithium clearance reduced by 15-30%, plasma lithium levels increase by similar proportion
+- If a patient is at the upper end of therapeutic range (e.g. 0.9-1.0 mmol/L), a 25% increase brings them into the toxic range (1.1-1.3+ mmol/L)
+- Ibuprofen has been specifically documented to cause lithium toxicity through this mechanism
+
+LITHIUM TOXICITY CLINICAL FEATURES
+Mild (1.5-2.0 mmol/L): Nausea, diarrhoea, fine tremor, fatigue, polyuria
+Moderate (2.0-2.5 mmol/L): Coarse tremor, confusion, muscle twitching, ataxia, slurred speech
+Severe (>2.5 mmol/L): Seizures, coma, cardiac arrhythmias, permanent neurological damage, death
+Note: Elderly patients and those with renal impairment are at risk at lower plasma levels
+
+DOSE CONSIDERATIONS
+- Risk exists at all therapeutic doses of ibuprofen (including OTC doses of 200-400mg)
+- Even short-course ibuprofen (3-5 days) can cause clinically significant lithium accumulation
+- Dehydration (from illness, hot weather, reduced fluid intake) markedly amplifies the interaction — sodium/lithium retention increases further
+- Patient must be warned NOT to take ibuprofen OTC without medical advice
+
+CLINICAL ACTION
+- Avoid ibuprofen and all NSAIDs in patients on lithium where possible
+- If pain relief is required: use paracetamol — does not affect lithium clearance
+- If NSAID is essential: reduce lithium dose by approximately 25% and check lithium level after 4-5 days
+- Check lithium level urgently if patient has started any NSAID
+- Advise patient to maintain adequate fluid intake, especially during illness or summer
+- Warn patient about OTC ibuprofen availability — many patients do not consider OTC medications as 'drugs'
+
+SAFER ALTERNATIVES FOR PAIN/INFLAMMATION
+First choice: Paracetamol (acetaminophen) 500-1000mg — no effect on lithium clearance
+Second choice: Low-dose aspirin (75-100mg) for cardiovascular prophylaxis — less effect on lithium than full-dose NSAIDs
+Avoid: Ibuprofen, naproxen, diclofenac, celecoxib, indomethacin (all inhibit renal prostaglandins)
+
+DISCLAIMER: This document is for clinical reference only. Drug interaction management must be individualised by a qualified clinician or pharmacist.

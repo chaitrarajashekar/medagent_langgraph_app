@@ -1,0 +1,63 @@
+DOCUMENT: CYP450 Enzyme Drug Interactions — Clinical Reference Guide
+SOURCE: FDA Clinical Drug Interaction Guidance / BNF Appendix 1 / Clinical Pharmacology Reviews
+SEVERITY: VARIES BY PAIR
+CATEGORY: Pharmacokinetic — CYP450 Enzyme Interactions
+
+OVERVIEW
+The cytochrome P450 (CYP450) enzyme system is responsible for metabolising approximately 70-80% of all clinically used drugs. Drug interactions through CYP450 enzymes are among the most common and clinically significant pharmacokinetic interactions. Understanding which drugs are substrates, inhibitors, and inducers of key isoenzymes enables prediction and prevention of interactions.
+
+KEY ISOENZYMES AND CLINICALLY IMPORTANT DRUG PAIRS
+
+CYP3A4 (metabolises ~50% of all drugs)
+SUBSTRATES (drugs metabolised by CYP3A4):
+- Statins: simvastatin, lovastatin, atorvastatin (HIGH sensitivity)
+- Benzodiazepines: midazolam, triazolam, alprazolam
+- Calcium channel blockers: amlodipine, diltiazem, nifedipine, verapamil
+- Immunosuppressants: cyclosporine, tacrolimus, sirolimus
+- Antibiotics: clarithromycin is both substrate AND inhibitor
+- Antiretrovirals: most HIV protease inhibitors
+
+STRONG CYP3A4 INHIBITORS (increase substrate levels — MAJOR interactions):
+- Macrolide antibiotics: clarithromycin, erythromycin (NOT azithromycin)
+- Azole antifungals: itraconazole, ketoconazole, voriconazole, fluconazole
+- HIV protease inhibitors: ritonavir, indinavir, saquinavir
+- Grapefruit juice (>1 glass daily)
+Key interaction: Simvastatin + clarithromycin = CONTRAINDICATED (18.7x rhabdomyolysis risk)
+
+CYP3A4 INDUCERS (decrease substrate levels — therapeutic failure risk):
+- Rifampicin (most potent inducer)
+- Anticonvulsants: carbamazepine, phenytoin, phenobarbital
+- St John's Wort (herbal — often missed)
+Key interaction: Warfarin + rifampicin → INR drops dramatically, thromboembolism risk
+
+CYP2C9 (metabolises ~15% of drugs including warfarin)
+SUBSTRATES: Warfarin (S-isomer, more potent), phenytoin, NSAIDs (ibuprofen, diclofenac), sulfonylureas
+INHIBITORS: Fluconazole, amiodarone, fluvastatin, valproate, metronidazole
+Key interaction: Warfarin + fluconazole = INR elevation up to 50% within 2-3 days
+Key interaction: Warfarin + amiodarone = sustained INR increase requiring warfarin dose reduction by 30-50%
+
+CYP2C19 (metabolises clopidogrel, PPIs, some antidepressants)
+SUBSTRATES: Clopidogrel (prodrug activation), omeprazole, lansoprazole, diazepam, some SSRIs
+INHIBITORS: Omeprazole, esomeprazole, fluconazole, fluoxetine, fluvoxamine
+Key interaction: Omeprazole + clopidogrel = 40-50% reduction in antiplatelet effect (MAJOR)
+Pharmacogenomics: 2-14% of Europeans are CYP2C19 poor metabolisers (higher in Asians: 15-25%)
+
+CYP2D6 (metabolises ~25% of drugs including many antidepressants and opioids)
+SUBSTRATES: Codeine (to morphine), tramadol (to O-desmethyltramadol), TCAs, fluoxetine, risperidone, metoprolol, timolol
+INHIBITORS: Fluoxetine (potent), paroxetine (potent), bupropion (potent), duloxetine (moderate)
+Key interaction: Fluoxetine + tramadol = serotonin syndrome (pharmacodynamic + pharmacokinetic)
+Key interaction: Fluoxetine + codeine = reduced analgesia (less morphine produced)
+Pharmacogenomics: ~7-10% of Europeans are CYP2D6 poor metabolisers (higher in African Americans)
+Ultra-rapid metabolisers (1-2%): Codeine → excessive morphine production → respiratory depression
+
+CLINICAL DECISION FRAMEWORK FOR CYP INTERACTIONS
+1. Identify the substrate drug (what is being affected)
+2. Identify whether the precipitant drug is an inhibitor or inducer
+3. Assess interaction severity:
+   - Strong inhibitor + narrow therapeutic index substrate = MAJOR (e.g. clarithromycin + simvastatin)
+   - Moderate inhibitor + wide therapeutic index substrate = MODERATE (monitor)
+   - Weak inhibitor = MINOR (often clinically insignificant)
+4. Consider pharmacogenomic factors in at-risk populations
+5. If interaction is unavoidable: increase monitoring frequency, consider dose adjustment, inform patient
+
+DISCLAIMER: This document is for clinical reference only. Drug interaction management must be individualised by a qualified clinician or pharmacist.

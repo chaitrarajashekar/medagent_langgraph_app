@@ -1,0 +1,59 @@
+DOCUMENT: Oral Anticoagulation with Warfarin — Clinical Management Guide
+SOURCE: Derbyshire Medicines Management NHS Guidelines / BCSH Guidelines (Keeling et al.) / BNF 2024
+SEVERITY: REFERENCE DOCUMENT
+CATEGORY: Clinical Management
+
+WARFARIN — INDICATIONS AND TARGET INR
+Atrial Fibrillation: Target INR 2.5 (range 2.0-3.0)
+DVT/PE treatment: Target INR 2.5 (range 2.0-3.0)
+Mechanical heart valves (low risk): Target INR 2.5-3.0
+Mechanical heart valves (high risk): Target INR 3.0-3.5
+Antiphospholipid syndrome: Target INR 2.5-3.5
+
+STARTING WARFARIN
+- Slow loading regimen (primary care, AF, no urgent anticoagulation needed):
+  Day 1-2: Warfarin 2mg daily
+  Check INR at Day 14 and adjust dose accordingly
+  Target: INR 2-3 within 1-2 weeks
+- Do NOT use loading doses unless supervised — incorrect loading can cause severe haemorrhage or sub-therapeutic anticoagulation
+
+ANTIPLATELET THERAPY AND WARFARIN
+IMPORTANT: When starting warfarin, antiplatelet therapy (aspirin, clopidogrel, dipyridamole, ticagrelor, prasugrel) should be STOPPED once INR is within therapeutic range, UNLESS continuation is explicitly advised by a consultant in secondary care. This must be documented.
+Exceptions where dual therapy is appropriate:
+- Mechanical heart valve + recent ACS (specialist decision)
+- Post-PCI in AF (specialist decision, limited duration)
+- High thrombotic risk (must be individually assessed)
+
+DRUG INTERACTIONS WITH WARFARIN
+Drugs that INCREASE INR (inhibit warfarin metabolism or have additive anticoagulant effects):
+MAJOR interactions (avoid or intensive monitoring):
+- Metronidazole/tinidazole: Inhibit CYP2C9 — INR increases within 24-48 hours, can double INR
+- Fluconazole/miconazole: Potent CYP2C9/CYP3A4 inhibition — dramatic INR increases
+- Amiodarone: Inhibits CYP2C9 and CYP3A4 — gradual but sustained INR increase; warfarin dose reduction of 30-50% required
+- Ciprofloxacin/metronidazole: INR increases, mechanism not fully established, monitor closely
+- Aspirin (high dose): Additive antihaemostatic effect + COX inhibition
+- Trimethoprim/co-trimoxazole: Inhibit CYP2C9 — INR increases within days
+Monitoring recommendation: Check INR within 72 hours of starting any of the above, and again within 5-7 days
+
+Drugs that DECREASE INR (induce warfarin metabolism):
+- Rifampicin: Potent CYP inducer — can reduce INR dramatically within days
+- Carbamazepine, phenytoin, phenobarbital: CYP inducers — reduce warfarin effect
+- St John's Wort: CYP3A4/2C9 inducer — commonly missed (herbal, not considered 'medication' by patients)
+- Monitoring: Check INR weekly when enzyme inducer started or stopped
+
+BLEEDING MANAGEMENT
+Minor bleeding (epistaxis, bruising): Check INR, reduce dose if supratherapeutic
+INR 5-8, no bleeding: Withhold 1-2 doses, recheck INR
+INR >8, no bleeding or minor bleeding: Stop warfarin, give Vitamin K 1-5mg oral, recheck in 24h
+Major bleeding (any site): Stop warfarin, IV Vitamin K 5-10mg, Prothrombin Complex Concentrate (PCC), urgent haematology
+
+PATIENT COUNSELLING KEY POINTS
+1. Keep a consistent diet — large changes in Vitamin K intake (green leafy vegetables) affect INR
+2. Always carry anticoagulant alert card
+3. Tell every prescriber, pharmacist, and dentist you are on warfarin
+4. Report any unusual bleeding or bruising immediately
+5. Avoid OTC ibuprofen/aspirin without medical advice
+6. Alcohol: moderate intake is acceptable; binge drinking increases bleeding risk
+7. If you miss a dose: take it if remembered same day, skip if next day — never double dose
+
+DISCLAIMER: This document is for clinical reference only. Drug interaction management must be individualised by a qualified clinician or pharmacist.

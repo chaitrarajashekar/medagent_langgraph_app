@@ -1,0 +1,60 @@
+DOCUMENT: Simvastatin + Clarithromycin Drug Interaction — Rhabdomyolysis Risk
+SOURCE: FDA Zocor Label / MHRA SPS Guidelines / Oxford Medical Case Reports 2018 / DailyMed NLM
+SEVERITY: MAJOR — CONTRAINDICATED
+DRUG_PAIR: simvastatin + clarithromycin
+
+INTERACTION SUMMARY
+Simvastatin + clarithromycin is a CONTRAINDICATED drug combination according to both FDA prescribing information and MHRA/SPS UK guidelines. Clarithromycin is a potent inhibitor of CYP3A4, the primary enzyme responsible for simvastatin metabolism. Co-administration leads to dramatically increased simvastatin plasma levels and carries a serious risk of rhabdomyolysis — potentially leading to acute kidney injury, hyperkalaemia, and death. Simvastatin must be SUSPENDED for the entire duration of clarithromycin treatment.
+
+MECHANISM
+Simvastatin (a CYP3A4 substrate) is predominantly metabolised by CYP3A4 in the liver. Clarithromycin is one of the most potent CYP3A4 inhibitors available:
+- Clarithromycin inhibits CYP3A4 AND inhibits OATP1B1/1B3 hepatic uptake transporters
+- Combined enzyme + transporter inhibition markedly reduces simvastatin first-pass metabolism
+- Simvastatin AUC increases by approximately 8-17 fold with strong CYP3A4 inhibitors
+- Elevated simvastatin acid levels cause dose-dependent skeletal muscle toxicity
+- Mechanism of myotoxicity: mitochondrial dysfunction in muscle cells, impaired CoQ10 synthesis, disrupted membrane integrity → myocyte death → rhabdomyolysis
+
+RHABDOMYOLYSIS CLINICAL FEATURES
+- Muscle pain, weakness, tenderness (proximal muscles first)
+- Dark cola-coloured urine (myoglobinuria)
+- Markedly elevated creatine kinase (CK) — typically >10x ULN (>2,500 U/L); severe cases >100,000 U/L
+- Acute kidney injury: creatinine rises within 24-72 hours
+- Hyperkalaemia: released from damaged myocytes, can cause fatal arrhythmia
+- Case report (Oxford Medical Case Reports 2018): CK peaked at 223,859 U/L, creatinine rose from 63 to 325 μmol/L, severe hyperkalaemia (7.4 mmol/L) requiring ICU-level management
+
+CLINICAL EVIDENCE
+- FDA Zocor prescribing information: "Combination of [clarithromycin] with simvastatin is CONTRAINDICATED. If treatment with clarithromycin is unavoidable, therapy with simvastatin MUST be suspended during the course of treatment."
+- FDA adverse event analysis (2002): Over 50% of statin-induced rhabdomyolysis cases were due to drug interactions.
+- UK Primary care study (2012): 30% of patients were prescribed a CYP3A4 inhibitor concurrently with a CYP3A4-metabolised statin over a 1-year period.
+- MHRA/SPS Guidelines (2023): Clarithromycin is CONTRAINDICATED with simvastatin. If clarithromycin is essential, simvastatin MUST be stopped whilst taking the antibiotic course.
+- Rhabdomyolysis risk with simvastatin + CYP3A4 inhibitor is approximately 18.7-fold higher than simvastatin alone.
+
+DOSE CONSIDERATIONS
+- Dose-related risk: Simvastatin 80mg daily has a myopathy incidence of 0.9% vs 0.02% at 20mg/day in clinical trials WITHOUT CYP3A4 inhibitors — the combination with clarithromycin amplifies this massively
+- Even low-dose simvastatin (20mg) carries significant rhabdomyolysis risk with clarithromycin
+- There is NO safe dose combination — the interaction is pharmacologically fundamental, not dose-dependent
+
+CLINICAL ACTION
+IMMEDIATE ACTION REQUIRED:
+1. STOP simvastatin immediately when clarithromycin is prescribed
+2. Do not restart simvastatin until clarithromycin course is fully complete
+3. If patient has any muscle symptoms (pain, weakness, dark urine): check CK urgently, refer to emergency department
+4. Duration of simvastatin suspension: entire course of clarithromycin plus 2-3 days after completion (clarithromycin half-life ~5 hours, but metabolites persist)
+
+ANTIBIOTIC ALTERNATIVES (if infection requires macrolide):
+- Azithromycin: Does NOT significantly inhibit CYP3A4 — simvastatin can usually be continued (monitor, rare interaction reports)
+- Amoxicillin/co-amoxiclav: No CYP3A4 interaction with statins
+
+STATIN ALTERNATIVES (if clarithromycin course is unavoidable and statin cannot be stopped):
+- Rosuvastatin: Minimal CYP3A4 metabolism — significantly lower interaction risk, monitor closely
+- Fluvastatin: CYP2C9 substrate predominantly, can be continued with clarithromycin with caution
+- Pravastatin: Minimal CYP metabolism — can be continued with clarithromycin
+NOT acceptable alternatives: Atorvastatin (CYP3A4 substrate — avoid with clarithromycin), Lovastatin (CYP3A4 substrate — contraindicated)
+
+MONITORING IF COMBINATION CANNOT BE AVOIDED
+- Baseline CK before starting clarithromycin
+- CK on day 3 and day 7 of clarithromycin course
+- Creatinine and electrolytes if CK rising
+- Immediate cessation of both drugs if CK >5x ULN or symptoms develop
+
+DISCLAIMER: This document is for clinical reference only. Drug interaction management must be individualised by a qualified clinician or pharmacist.
