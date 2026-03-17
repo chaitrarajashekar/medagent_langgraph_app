@@ -12,10 +12,7 @@ from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.vectorstores import Chroma
-try:
-    from langchain_huggingface import HuggingFaceEmbeddings
-except ImportError:
-    from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 import langwatch
@@ -81,13 +78,13 @@ def get_chromadb():
     chunks = RecursiveCharacterTextSplitter(
         chunk_size=500, chunk_overlap=50
     ).split_documents(raw_docs)
-    emb = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2",
-        model_kwargs={"device": "cpu"}
+    emb = OpenAIEmbeddings(
+        model="text-embedding-3-small",
+        api_key=os.getenv("OPENAI_API_KEY", "")
     )
     _db = Chroma.from_documents(chunks, emb,
-        collection_name="medagent_v4",
-        persist_directory="./chroma_medagent_v4")
+        collection_name="medagent_openai",
+        persist_directory="./chroma_medagent_openai")
     return _db
 
 # ── Parse medication string ───────────────────────────────────────────
