@@ -6,7 +6,9 @@ Endpoints:
   GET  /health             — health check
   GET  /                   — info
 """
-import os, uuid
+import os, uuid, asyncio
+from concurrent.futures import ThreadPoolExecutor
+_executor = ThreadPoolExecutor(max_workers=2)
 
 # ── Step 1: load .env but DO NOT override vars already set in shell ───
 from dotenv import load_dotenv
@@ -45,21 +47,70 @@ app = FastAPI(
 app.add_middleware(CORSMiddleware, allow_origins=["*"],
                   allow_methods=["*"], allow_headers=["*"])
 
+# Run pipeline in a thread so we can return a proper error if it times out
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeout
+import asyncio
+_executor = ThreadPoolExecutor(max_workers=4)
+
+
+@app.on_event("startup")
+async def startup_event():
+    """
+    Pre-warm ChromaDB and embedding model on startup.
+    This prevents the first request from timing out on Render.
+    """
+    print("🔥 Pre-warming ChromaDB and embedding model...")
+    try:
+        from nodes import get_chromadb
+        get_chromadb()
+        print("✅ ChromaDB ready")
+    except Exception as e:
+        print(f"⚠️  ChromaDB pre-warm failed: {e}")
+
 
 # ── Request / Response models ─────────────────────────────────────────
+class RegulatoryAuthority(str):
+    """Supported regulatory authorities for Agent 2 validation."""
+    FDA  = "FDA"    # US — OpenFDA adverse events + drug labels
+    EMA  = "EMA"    # EU — EudraVigilance + CHMP decisions
+    MHRA = "MHRA"   # UK — Yellow Card scheme + Drug Safety Updates
+
+VALID_AUTHORITIES = {"FDA", "EMA", "MHRA"}
+DEFAULT_AUTHORITIES = ["FDA"]   # FDA only by default — fastest single call
+
+
 class InteractionRequest(BaseModel):
-    medications:        str = Field(..., example="warfarin:5:daily\naspirin:100:daily")
-    patient_age:        str = Field(..., example="72")
-    patient_conditions: str = Field("", example="atrial fibrillation, hypertension")
-    clinical_question:  str = Field("", example="Is it safe to continue both?")
+    medications:            str       = Field(...,  example="warfarin:5:daily\naspirin:100:daily")
+    patient_age:            str       = Field(...,  example="72")
+    patient_conditions:     str       = Field("",   example="atrial fibrillation, hypertension")
+    clinical_question:      str       = Field("",   example="Is it safe to continue both?")
+    regulatory_authorities: List[str] = Field(
+        default=["FDA"],
+        description=(
+            "Which regulatory authorities Agent 2 should call. "
+            "Options: FDA (US), EMA (EU), MHRA (UK). "
+            "More authorities = stronger validation but higher latency. "
+            "All selected authorities run in parallel."
+        ),
+        example=["FDA", "EMA", "MHRA"]
+    )
 
     class Config:
         json_schema_extra = {"example": {
-            "medications":        "warfarin:5:daily\naspirin:100:daily",
-            "patient_age":        "72",
-            "patient_conditions": "atrial fibrillation, hypertension",
-            "clinical_question":  "Is it safe to continue both medications?",
+            "medications":            "warfarin:5:daily\naspirin:100:daily",
+            "patient_age":            "72",
+            "patient_conditions":     "atrial fibrillation, hypertension",
+            "clinical_question":      "Is it safe to continue both medications?",
+            "regulatory_authorities": ["FDA"],
         }}
+
+    def get_authorities(self) -> List[str]:
+        """Validate and return cleaned authority list."""
+        chosen = [a.upper().strip() for a in (self.regulatory_authorities or ["FDA"])]
+        invalid = [a for a in chosen if a not in VALID_AUTHORITIES]
+        if invalid:
+            raise ValueError(f"Invalid authorities: {invalid}. Valid: {VALID_AUTHORITIES}")
+        return chosen if chosen else ["FDA"]
 
 
 class ChatRequest(BaseModel):
@@ -96,7 +147,7 @@ def run_pipeline(initial_state):
     return result, run_id
 
 # ── Endpoints ─────────────────────────────────────────────────────────
-@app.api_route("/", methods=["GET", "HEAD"])
+@app.api_route("/", methods=["GET", "HEAD"], operation_id="root_get")
 def root():
     return {
         "service":          "MedAgent AI v4",
@@ -109,7 +160,7 @@ def root():
     }
 
 
-@app.api_route("/health", methods=["GET", "HEAD"])
+@app.api_route("/health", methods=["GET", "HEAD"], operation_id="health_get")
 def health():
     key_loaded = bool(os.getenv("OPENAI_API_KEY"))
     lw_key     = bool(os.getenv("LANGWATCH_API_KEY"))
@@ -123,27 +174,21 @@ def health():
 
 
 @app.post("/check-interaction", response_model=InteractionResponse)
-def check_interaction(req: InteractionRequest):
+async def check_interaction(req: InteractionRequest):
     """Structured input — medications, age, conditions, question."""
 
-    # Guard: check key is available before running pipeline
     if not os.getenv("OPENAI_API_KEY"):
-        raise HTTPException(
-            status_code=500,
-            detail=(
-                "OPENAI_API_KEY not set. "
-                "Add it to your .env file or uncomment the "
-                "os.environ line in api.py"
-            )
-        )
+        raise HTTPException(status_code=500,
+            detail="OPENAI_API_KEY not set. Add it to your .env file.")
 
     initial: MedAgentState = {
         "input_text":         "",
         "medications":        req.medications,
         "patient_age":        req.patient_age,
         "patient_conditions": req.patient_conditions,
-        "clinical_question":  req.clinical_question,
-        "guardrail_passed":   True,
+        "clinical_question":       req.clinical_question,
+        "regulatory_authorities":  getattr(req, "get_authorities", lambda: ["FDA"])(),
+        "guardrail_passed":        True,
         "guardrail_errors":   [],
         "rag_results":        [],
         "fda_results":        [],
@@ -152,32 +197,31 @@ def check_interaction(req: InteractionRequest):
         "messages":           [],
     }
     try:
-        result, run_id = run_pipeline(initial)
+        # Run in thread pool so async event loop stays responsive
+        loop   = asyncio.get_event_loop()
+        result, run_id = await loop.run_in_executor(
+            _executor, lambda: run_pipeline(initial)
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Pipeline error: {e}")
-
-    project = os.getenv("LANGCHAIN_PROJECT", "medagent-production")
-    ls_url  = "https://app.langwatch.ai"
 
     return InteractionResponse(
         run_id=run_id,
         report=result.get("final_report", "No report generated."),
         guardrail_ok=result.get("guardrail_passed", True),
-        langwatch_url=ls_url,
+        langwatch_url="https://app.langwatch.ai",
     )
 
 
 @app.post("/chat", response_model=InteractionResponse)
-def chat(req: ChatRequest):
+async def chat(req: ChatRequest):
     """Free-text chat input — mirrors LangFlow Chat Input node."""
 
     if not os.getenv("OPENAI_API_KEY"):
-        raise HTTPException(
-            status_code=500,
-            detail="OPENAI_API_KEY not set. Add it to your .env file."
-        )
+        raise HTTPException(status_code=500,
+            detail="OPENAI_API_KEY not set. Add it to your .env file.")
 
-    parsed   = parse_input_message(req.message)
+    parsed  = parse_input_message(req.message)
     initial: MedAgentState = {
         "input_text":         req.message,
         "medications":        parsed["medications"],
@@ -193,16 +237,16 @@ def chat(req: ChatRequest):
         "messages":           [],
     }
     try:
-        result, run_id = run_pipeline(initial)
+        loop   = asyncio.get_event_loop()
+        result, run_id = await loop.run_in_executor(
+            _executor, lambda: run_pipeline(initial)
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Pipeline error: {e}")
-
-    project = os.getenv("LANGCHAIN_PROJECT", "medagent-production")
-    ls_url  = "https://app.langwatch.ai"
 
     return InteractionResponse(
         run_id=run_id,
         report=result.get("final_report", "No report generated."),
         guardrail_ok=result.get("guardrail_passed", True),
-        langwatch_url=ls_url,
+        langwatch_url="https://app.langwatch.ai",
     )

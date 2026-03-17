@@ -15,6 +15,9 @@ class MedAgentState(TypedDict):
     patient_conditions: str          # parsed: "atrial fibrillation, hypertension"
     clinical_question:  str          # parsed: "Is it safe to continue both?"
 
+    # ── Regulatory authority selection ───────────────────────────────
+    regulatory_authorities: List[str]  # e.g. ["FDA"], ["FDA","EMA"], ["FDA","EMA","MHRA"]
+
     # ── Guardrail results ─────────────────────────────────────────────
     guardrail_passed:   bool
     guardrail_errors:   List[str]
