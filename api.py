@@ -130,19 +130,83 @@ class InteractionResponse(BaseModel):
 
 # ── Helper: run the graph ────────────────────────────────────────────
 def run_pipeline(initial_state):
+    """
+    Wraps the full LangGraph pipeline in a single LangWatch trace.
+    Uses context manager pattern (with langwatch.trace()) — more reliable
+    than nested @langwatch.trace decorator which caused span context issues.
+    """
+    from langchain_core.runnables import RunnableConfig
+
     run_id = str(uuid.uuid4())
     initial_state["run_id"]   = run_id
     initial_state["messages"] = []
 
-    with langwatch.trace(name="MedAgentPipeline") as t:
-        t.update(
-            input=f"Patient {initial_state.get('patient_age','')}y | "
-                  f"Meds: {initial_state.get('medications','')}",
-        )
+    lw_enabled = bool(os.getenv("LANGWATCH_API_KEY"))
+
+    if not lw_enabled:
+        # LangWatch not configured — run pipeline without tracing
         result = medagent_graph.invoke(initial_state)
-        t.update(
-            output=result.get("final_report","")[:300],
-        )
+        return result, run_id
+
+    # Use context manager — creates parent trace that all node spans attach to
+    with langwatch.trace(
+        name="MedAgentPipeline",
+        metadata={
+            "medications":  initial_state.get("medications",""),
+            "patient_age":  initial_state.get("patient_age",""),
+            "conditions":   initial_state.get("patient_conditions",""),
+            "authorities":  str(initial_state.get("regulatory_authorities",["FDA"])),
+        }
+    ) as trace:
+        try:
+            trace.update(
+                input=(
+                    f"Patient {initial_state.get('patient_age','')}y | "
+                    f"{initial_state.get('patient_conditions','')} | "
+                    f"Meds: {initial_state.get('medications','')}"
+                )
+            )
+        except Exception:
+            pass
+
+        # Pass LangWatch callback via RunnableConfig so LLM calls
+        # appear as named child spans inside this trace
+        try:
+            lw_callback = trace.get_langchain_callback()
+            config = RunnableConfig(callbacks=[lw_callback])
+        except Exception:
+            config = RunnableConfig()
+
+        result = medagent_graph.invoke(initial_state, config=config)
+
+        # Update trace output and log evaluations
+        try:
+            trace.update(output=result.get("final_report","")[:500])
+
+            trace.add_evaluation(
+                name="Pipeline: Input Guardrail",
+                passed=result.get("guardrail_passed", True),
+                is_guardrail=True,
+                details=(
+                    "Input validation passed"
+                    if result.get("guardrail_passed")
+                    else str(result.get("guardrail_errors",[]))
+                ),
+            )
+
+            fda_results = result.get("fda_results", [])
+            if fda_results and not fda_results[0].get("blocked"):
+                sev_score = {"MAJOR":0.0,"MODERATE":0.5,"MINOR":1.0,"UNKNOWN":0.5}
+                final_sev = fda_results[0].get("final_severity","UNKNOWN")
+                trace.add_evaluation(
+                    name="Pipeline: Final Severity",
+                    passed=True,
+                    score=sev_score.get(final_sev, 0.5),
+                    label=final_sev,
+                    details=f"Agent2: {fda_results[0].get('agent2_decision','CONFIRM')}",
+                )
+        except Exception:
+            pass
 
     return result, run_id
 

@@ -16,7 +16,9 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 import langwatch
-from observability import traced_node
+from langwatch.types import RAGChunk
+from langchain_core.runnables import RunnableConfig
+from observability import traced_node, safe_add_evaluation, safe_span_update, get_safe_span
 from state import MedAgentState
 from guardrails import check_input, check_rag_output, check_fda_output
 
@@ -77,16 +79,30 @@ KB_DOCS = [
 
 # ── LLM singleton ─────────────────────────────────────────────────────
 def get_llm(max_tokens=1200, callbacks=None):
-    load_dotenv(override=False)  # never override shell $env: vars
+    """
+    Returns ChatOpenAI. Per LangWatch docs, injects get_langchain_callback()
+    so every LLM call appears as a named span inside the current trace.
+    """
+    load_dotenv(override=False)
     key = os.getenv("OPENAI_API_KEY", "")
     if not key:
         raise ValueError("OPENAI_API_KEY not found. Set it in .env")
+
+    # LangWatch langchain callback — captures prompt/response/tokens per call
+    lw_callbacks = []
+    try:
+        trace = langwatch.get_current_trace()
+        if trace:
+            lw_callbacks = [trace.get_langchain_callback()]
+    except Exception:
+        pass
+
     return ChatOpenAI(
         model="gpt-4o",
         temperature=0.1,
         api_key=key,
         max_tokens=max_tokens,
-        callbacks=callbacks or [],
+        callbacks=lw_callbacks + (callbacks or []),
     )
 
 # ── ChromaDB singleton ────────────────────────────────────────────────
@@ -318,7 +334,33 @@ def node_agent1_rag(state: MedAgentState, config: dict = None) -> dict:
         icon = "✅" if passed else "⚠️"
         print(f"   {icon} {drug_a}+{drug_b} → {severity}")
 
-    
+    # ── LangWatch RAG logging (per capturing-rag docs) ────────────────
+    # type="rag" enables Faithfulness + Context Relevancy evaluators
+    try:
+        with langwatch.span(type="rag", name="Agent1_KBRetrieval") as rag_span:
+            safe_span_update(rag_span, 
+                input=state.get("clinical_question", ""),
+                contexts=[
+                    RAGChunk(
+                        content=r.get("summary","")[:400],
+                        document_id=f"{r.get('drug_a','')}+{r.get('drug_b','')}",
+                        source="ChromaDB-KB",
+                    )
+                    for r in results
+                ],
+                output=f"Severities found: {[r.get('severity') for r in results]}",
+            )
+            # Log each output guardrail as evaluation (per capturing-evaluations docs)
+            for r in results:
+                safe_add_evaluation(rag_span, 
+                    name=f"G-OUT-01: Severity Present ({r.get('drug_a','')}+{r.get('drug_b','')})",
+                    passed=r.get("guardrail_passed", True),
+                    is_guardrail=True,
+                    score=1.0 if r.get("guardrail_passed") else 0.0,
+                    details=f"Severity: {r.get('severity')} | KB chunks: {r.get('chunks_retrieved',0)}",
+                )
+    except Exception:
+        pass
 
     return {"rag_results": results}
 
@@ -494,6 +536,39 @@ def node_agent2_fda(state: MedAgentState, config: dict = None) -> dict:
         print(f"   {icon} Agent 2 decision: {agent2_act} | Final severity: {final_sev}")
         if agent2_act in ("ESCALATE","OVERRIDE"):
             print(f"      ⚠️  Agent 2 overriding Agent 1: {agent1_sev} → {final_sev}")
+
+        # ── LangWatch evaluation logging (per capturing-evaluations docs) ──
+        try:
+            span = get_safe_span()
+            # Log Agent2 override decision as a guardrail
+            safe_add_evaluation(span, 
+                name=f"Agent2 Decision ({drug_a}+{drug_b})",
+                passed=agent2_act in ("CONFIRM", "ESCALATE"),
+                is_guardrail=True,
+                score={"CONFIRM":1.0,"ESCALATE":0.75,"CONTRADICT":0.5,"OVERRIDE":0.25}.get(agent2_act,0.5),
+                label=agent2_act,
+                details=f"Agent1={agent1_sev} → Agent2={final_sev} | Authorities: {authorities}",
+            )
+            # Log each jurisdiction signal as a separate evaluation
+            for auth, sig in [("FDA", f"{real_a} events"), ("EMA", ema_signal.get("severity","NO DATA")), ("MHRA", mhra_signal.get("severity","NO DATA"))]:
+                if auth in authorities:
+                    safe_add_evaluation(span, 
+                        name=f"Regulatory Signal: {auth}",
+                        passed=sig not in ("NO DATA","NOT REQUESTED"),
+                        score=1.0 if sig not in ("NO DATA","NOT REQUESTED") else 0.0,
+                        label=sig,
+                        details=ema_signal.get("summary","") if auth=="EMA" else mhra_signal.get("summary","") if auth=="MHRA" else f"FDA: {real_a} adverse events",
+                    )
+            # Log FDA numbers groundedness guardrail
+            safe_add_evaluation(span, 
+                name=f"G-FDA-01: Number Grounding ({drug_a}+{drug_b})",
+                passed=passed,
+                is_guardrail=True,
+                score=1.0 if passed else 0.0,
+                details=f"FDA events used: {real_a}/{real_b}",
+            )
+        except Exception:
+            pass
 
         fda_results.append({
             "drug_a":            drug_a,
