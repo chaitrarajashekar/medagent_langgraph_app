@@ -5,8 +5,8 @@ Usage: python test_langwatch.py
 import os, sys, time
  
 # ── Paste ONLY your OpenAI key here — LangWatch key is already set ────
-OPENAI_KEY    = "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"
-LANGWATCH_KEY = "sk-lw-laFKFTIJraDlSGFD4C0fjdYB9rFx5h28uqlQZMdyX250iZPX"
+OPENAI_KEY    = "sk-proj"
+LANGWATCH_KEY = "sk-lw-"
 
 # Must set BEFORE importing langwatch
 os.environ["OPENAI_API_KEY"]    = OPENAI_KEY
