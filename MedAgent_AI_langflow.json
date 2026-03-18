@@ -1,0 +1,1499 @@
+{
+  "data": {
+    "edges": [
+      {
+        "animated": false,
+        "className": "",
+        "data": {
+          "sourceHandle": {
+            "dataType": "ChatInput",
+            "id": "ChatInput-iP2m7",
+            "name": "message",
+            "output_types": [
+              "Message"
+            ]
+          },
+          "targetHandle": {
+            "fieldName": "clinical_question",
+            "id": "CustomComponent-6pBLv",
+            "inputTypes": [
+              "Message"
+            ],
+            "type": "str"
+          }
+        },
+        "id": "xy-edge__ChatInput-iP2m7{œdataTypeœ:œChatInputœ,œidœ:œChatInput-iP2m7œ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}-CustomComponent-6pBLv{œfieldNameœ:œclinical_questionœ,œidœ:œCustomComponent-6pBLvœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
+        "selected": false,
+        "source": "ChatInput-iP2m7",
+        "sourceHandle": "{œdataTypeœ:œChatInputœ,œidœ:œChatInput-iP2m7œ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "CustomComponent-6pBLv",
+        "targetHandle": "{œfieldNameœ:œclinical_questionœ,œidœ:œCustomComponent-6pBLvœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
+      },
+      {
+        "animated": false,
+        "className": "",
+        "data": {
+          "sourceHandle": {
+            "dataType": "MedAgentRAGReader",
+            "id": "CustomComponent-6pBLv",
+            "name": "rag_output",
+            "output_types": [
+              "Message"
+            ]
+          },
+          "targetHandle": {
+            "fieldName": "rag_output",
+            "id": "CustomComponent-W6X5u",
+            "inputTypes": [
+              "Message"
+            ],
+            "type": "str"
+          }
+        },
+        "id": "xy-edge__CustomComponent-6pBLv{œdataTypeœ:œMedAgentRAGReaderœ,œidœ:œCustomComponent-6pBLvœ,œnameœ:œrag_outputœ,œoutput_typesœ:[œMessageœ]}-CustomComponent-W6X5u{œfieldNameœ:œrag_outputœ,œidœ:œCustomComponent-W6X5uœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
+        "selected": false,
+        "source": "CustomComponent-6pBLv",
+        "sourceHandle": "{œdataTypeœ:œMedAgentRAGReaderœ,œidœ:œCustomComponent-6pBLvœ,œnameœ:œrag_outputœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "CustomComponent-W6X5u",
+        "targetHandle": "{œfieldNameœ:œrag_outputœ,œidœ:œCustomComponent-W6X5uœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
+      },
+      {
+        "animated": false,
+        "className": "",
+        "data": {
+          "sourceHandle": {
+            "dataType": "MedAgentFDAValidator",
+            "id": "CustomComponent-W6X5u",
+            "name": "fda_output",
+            "output_types": [
+              "Message"
+            ]
+          },
+          "targetHandle": {
+            "fieldName": "fda_output",
+            "id": "CustomComponent-ITuq6",
+            "inputTypes": [
+              "Message"
+            ],
+            "type": "str"
+          }
+        },
+        "id": "xy-edge__CustomComponent-W6X5u{œdataTypeœ:œMedAgentFDAValidatorœ,œidœ:œCustomComponent-W6X5uœ,œnameœ:œfda_outputœ,œoutput_typesœ:[œMessageœ]}-CustomComponent-ITuq6{œfieldNameœ:œfda_outputœ,œidœ:œCustomComponent-ITuq6œ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
+        "selected": false,
+        "source": "CustomComponent-W6X5u",
+        "sourceHandle": "{œdataTypeœ:œMedAgentFDAValidatorœ,œidœ:œCustomComponent-W6X5uœ,œnameœ:œfda_outputœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "CustomComponent-ITuq6",
+        "targetHandle": "{œfieldNameœ:œfda_outputœ,œidœ:œCustomComponent-ITuq6œ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
+      },
+      {
+        "animated": false,
+        "className": "",
+        "data": {
+          "sourceHandle": {
+            "dataType": "MedAgentReportCompiler",
+            "id": "CustomComponent-ITuq6",
+            "name": "report_output",
+            "output_types": [
+              "Message"
+            ]
+          },
+          "targetHandle": {
+            "fieldName": "input_value",
+            "id": "ChatOutput-Y1teN",
+            "inputTypes": [
+              "Data",
+              "DataFrame",
+              "Message"
+            ],
+            "type": "other"
+          }
+        },
+        "id": "xy-edge__CustomComponent-ITuq6{œdataTypeœ:œMedAgentReportCompilerœ,œidœ:œCustomComponent-ITuq6œ,œnameœ:œreport_outputœ,œoutput_typesœ:[œMessageœ]}-ChatOutput-Y1teN{œfieldNameœ:œinput_valueœ,œidœ:œChatOutput-Y1teNœ,œinputTypesœ:[œDataœ,œDataFrameœ,œMessageœ],œtypeœ:œotherœ}",
+        "selected": false,
+        "source": "CustomComponent-ITuq6",
+        "sourceHandle": "{œdataTypeœ:œMedAgentReportCompilerœ,œidœ:œCustomComponent-ITuq6œ,œnameœ:œreport_outputœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "ChatOutput-Y1teN",
+        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œChatOutput-Y1teNœ,œinputTypesœ:[œDataœ,œDataFrameœ,œMessageœ],œtypeœ:œotherœ}"
+      }
+    ],
+    "nodes": [
+      {
+        "data": {
+          "id": "ChatInput-iP2m7",
+          "node": {
+            "base_classes": [
+              "Message"
+            ],
+            "beta": false,
+            "conditional_paths": [],
+            "custom_fields": {},
+            "description": "Get chat inputs from the Playground.",
+            "display_name": "Chat Input",
+            "documentation": "https://docs.langflow.org/chat-input-and-output",
+            "edited": false,
+            "field_order": [
+              "input_value",
+              "should_store_message",
+              "sender",
+              "sender_name",
+              "session_id",
+              "context_id",
+              "files"
+            ],
+            "frozen": false,
+            "icon": "MessagesSquare",
+            "legacy": false,
+            "lf_version": "1.7.3",
+            "metadata": {
+              "code_hash": "7a26c54d89ed",
+              "dependencies": {
+                "dependencies": [
+                  {
+                    "name": "lfx",
+                    "version": "0.2.1"
+                  }
+                ],
+                "total_dependencies": 1
+              },
+              "module": "lfx.components.input_output.chat.ChatInput"
+            },
+            "minimized": true,
+            "output_types": [],
+            "outputs": [
+              {
+                "allows_loop": false,
+                "cache": true,
+                "display_name": "Chat Message",
+                "group_outputs": false,
+                "method": "message_response",
+                "name": "message",
+                "selected": "Message",
+                "tool_mode": true,
+                "types": [
+                  "Message"
+                ],
+                "value": "__UNDEFINED__"
+              }
+            ],
+            "pinned": false,
+            "template": {
+              "_type": "Component",
+              "code": {
+                "advanced": true,
+                "dynamic": true,
+                "fileTypes": [],
+                "file_path": "",
+                "info": "",
+                "list": false,
+                "load_from_db": false,
+                "multiline": true,
+                "name": "code",
+                "password": false,
+                "placeholder": "",
+                "required": true,
+                "show": true,
+                "title_case": false,
+                "type": "code",
+                "value": "from lfx.base.data.utils import IMG_FILE_TYPES, TEXT_FILE_TYPES\nfrom lfx.base.io.chat import ChatComponent\nfrom lfx.inputs.inputs import BoolInput\nfrom lfx.io import (\n    DropdownInput,\n    FileInput,\n    MessageTextInput,\n    MultilineInput,\n    Output,\n)\nfrom lfx.schema.message import Message\nfrom lfx.utils.constants import (\n    MESSAGE_SENDER_AI,\n    MESSAGE_SENDER_NAME_USER,\n    MESSAGE_SENDER_USER,\n)\n\n\nclass ChatInput(ChatComponent):\n    display_name = \"Chat Input\"\n    description = \"Get chat inputs from the Playground.\"\n    documentation: str = \"https://docs.langflow.org/chat-input-and-output\"\n    icon = \"MessagesSquare\"\n    name = \"ChatInput\"\n    minimized = True\n\n    inputs = [\n        MultilineInput(\n            name=\"input_value\",\n            display_name=\"Input Text\",\n            value=\"\",\n            info=\"Message to be passed as input.\",\n            input_types=[],\n        ),\n        BoolInput(\n            name=\"should_store_message\",\n            display_name=\"Store Messages\",\n            info=\"Store the message in the history.\",\n            value=True,\n            advanced=True,\n        ),\n        DropdownInput(\n            name=\"sender\",\n            display_name=\"Sender Type\",\n            options=[MESSAGE_SENDER_AI, MESSAGE_SENDER_USER],\n            value=MESSAGE_SENDER_USER,\n            info=\"Type of sender.\",\n            advanced=True,\n        ),\n        MessageTextInput(\n            name=\"sender_name\",\n            display_name=\"Sender Name\",\n            info=\"Name of the sender.\",\n            value=MESSAGE_SENDER_NAME_USER,\n            advanced=True,\n        ),\n        MessageTextInput(\n            name=\"session_id\",\n            display_name=\"Session ID\",\n            info=\"The session ID of the chat. If empty, the current session ID parameter will be used.\",\n            advanced=True,\n        ),\n        MessageTextInput(\n            name=\"context_id\",\n            display_name=\"Context ID\",\n            info=\"The context ID of the chat. Adds an extra layer to the local memory.\",\n            value=\"\",\n            advanced=True,\n        ),\n        FileInput(\n            name=\"files\",\n            display_name=\"Files\",\n            file_types=TEXT_FILE_TYPES + IMG_FILE_TYPES,\n            info=\"Files to be sent with the message.\",\n            advanced=True,\n            is_list=True,\n            temp_file=True,\n        ),\n    ]\n    outputs = [\n        Output(display_name=\"Chat Message\", name=\"message\", method=\"message_response\"),\n    ]\n\n    async def message_response(self) -> Message:\n        # Ensure files is a list and filter out empty/None values\n        files = self.files if self.files else []\n        if files and not isinstance(files, list):\n            files = [files]\n        # Filter out None/empty values\n        files = [f for f in files if f is not None and f != \"\"]\n\n        session_id = self.session_id or self.graph.session_id or \"\"\n        message = await Message.create(\n            text=self.input_value,\n            sender=self.sender,\n            sender_name=self.sender_name,\n            session_id=session_id,\n            context_id=self.context_id,\n            files=files,\n        )\n        if session_id and isinstance(message, Message) and self.should_store_message:\n            stored_message = await self.send_message(\n                message,\n            )\n            self.message.value = stored_message\n            message = stored_message\n\n        self.status = message\n        return message\n"
+              },
+              "context_id": {
+                "_input_type": "MessageTextInput",
+                "advanced": true,
+                "display_name": "Context ID",
+                "dynamic": false,
+                "info": "The context ID of the chat. Adds an extra layer to the local memory.",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "context_id",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": ""
+              },
+              "files": {
+                "_input_type": "FileInput",
+                "advanced": true,
+                "display_name": "Files",
+                "dynamic": false,
+                "fileTypes": [
+                  "csv",
+                  "json",
+                  "pdf",
+                  "txt",
+                  "md",
+                  "mdx",
+                  "yaml",
+                  "yml",
+                  "xml",
+                  "html",
+                  "htm",
+                  "docx",
+                  "py",
+                  "sh",
+                  "sql",
+                  "js",
+                  "ts",
+                  "tsx",
+                  "jpg",
+                  "jpeg",
+                  "png",
+                  "bmp",
+                  "image"
+                ],
+                "file_path": "",
+                "info": "Files to be sent with the message.",
+                "list": true,
+                "list_add_label": "Add More",
+                "name": "files",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "temp_file": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "file",
+                "value": ""
+              },
+              "input_value": {
+                "_input_type": "MultilineInput",
+                "advanced": false,
+                "ai_enabled": false,
+                "copy_field": false,
+                "display_name": "Input Text",
+                "dynamic": false,
+                "info": "Message to be passed as input.",
+                "input_types": [],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "multiline": true,
+                "name": "input_value",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "Is it safe for a 72-year-old patient on warfarin 5mg and aspirin 100mg daily? "
+              },
+              "sender": {
+                "_input_type": "DropdownInput",
+                "advanced": true,
+                "combobox": false,
+                "dialog_inputs": {},
+                "display_name": "Sender Type",
+                "dynamic": false,
+                "external_options": {},
+                "info": "Type of sender.",
+                "name": "sender",
+                "options": [
+                  "Machine",
+                  "User"
+                ],
+                "options_metadata": [],
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "toggle": false,
+                "tool_mode": false,
+                "trace_as_metadata": true,
+                "track_in_telemetry": true,
+                "type": "str",
+                "value": "User"
+              },
+              "sender_name": {
+                "_input_type": "MessageTextInput",
+                "advanced": true,
+                "display_name": "Sender Name",
+                "dynamic": false,
+                "info": "Name of the sender.",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "sender_name",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "User"
+              },
+              "session_id": {
+                "_input_type": "MessageTextInput",
+                "advanced": true,
+                "display_name": "Session ID",
+                "dynamic": false,
+                "info": "The session ID of the chat. If empty, the current session ID parameter will be used.",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "session_id",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": ""
+              },
+              "should_store_message": {
+                "_input_type": "BoolInput",
+                "advanced": true,
+                "display_name": "Store Messages",
+                "dynamic": false,
+                "info": "Store the message in the history.",
+                "list": false,
+                "list_add_label": "Add More",
+                "name": "should_store_message",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_metadata": true,
+                "track_in_telemetry": true,
+                "type": "bool",
+                "value": true
+              }
+            },
+            "tool_mode": false
+          },
+          "showNode": true,
+          "type": "ChatInput"
+        },
+        "dragging": false,
+        "id": "ChatInput-iP2m7",
+        "measured": {
+          "height": 201,
+          "width": 320
+        },
+        "position": {
+          "x": 13,
+          "y": 133.5
+        },
+        "selected": false,
+        "type": "genericNode"
+      },
+      {
+        "data": {
+          "id": "CustomComponent-6pBLv",
+          "node": {
+            "base_classes": [
+              "Message"
+            ],
+            "beta": false,
+            "conditional_paths": [],
+            "custom_fields": {},
+            "description": "Step 1: RxNorm MCP tool validates every drug name is real. Step 2: ChromaDB semantic search on KBFILES folder documents. Step 3: GPT-4o LLM analysis. Unknown drugs are blocked before reaching the LLM — prevents hallucination.",
+            "display_name": "MedAgent — Agent 1 RAG Reader",
+            "documentation": "",
+            "edited": true,
+            "field_order": [
+              "medications",
+              "patient_age",
+              "patient_conditions",
+              "clinical_question",
+              "openai_key",
+              "kb_dir"
+            ],
+            "frozen": false,
+            "icon": "search",
+            "legacy": false,
+            "lf_version": "1.7.3",
+            "metadata": {
+              "code_hash": "645c7c7b7fdb",
+              "dependencies": {
+                "dependencies": [
+                  {
+                    "name": "langflow",
+                    "version": "1.7.3"
+                  },
+                  {
+                    "name": "httpx",
+                    "version": "0.28.1"
+                  },
+                  {
+                    "name": "langchain_openai",
+                    "version": "0.3.35"
+                  },
+                  {
+                    "name": "langchain_core",
+                    "version": "0.3.83"
+                  },
+                  {
+                    "name": "langchain_community",
+                    "version": "0.3.31"
+                  },
+                  {
+                    "name": "langchain_text_splitters",
+                    "version": "0.3.11"
+                  },
+                  {
+                    "name": "langchain",
+                    "version": "0.3.27"
+                  }
+                ],
+                "total_dependencies": 7
+              },
+              "module": "custom_components.medagent__agent_1_rag_reader"
+            },
+            "minimized": false,
+            "output_types": [],
+            "outputs": [
+              {
+                "allows_loop": false,
+                "cache": true,
+                "display_name": "RAG Analysis Output",
+                "group_outputs": false,
+                "hidden": null,
+                "loop_types": null,
+                "method": "build_output",
+                "name": "rag_output",
+                "options": null,
+                "required_inputs": null,
+                "selected": "Message",
+                "tool_mode": true,
+                "types": [
+                  "Message"
+                ],
+                "value": "__UNDEFINED__"
+              }
+            ],
+            "pinned": false,
+            "template": {
+              "_type": "Component",
+              "clinical_question": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Clinical Question",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "clinical_question",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": ""
+              },
+              "code": {
+                "advanced": true,
+                "dynamic": true,
+                "fileTypes": [],
+                "file_path": "",
+                "info": "",
+                "list": false,
+                "load_from_db": false,
+                "multiline": true,
+                "name": "code",
+                "password": false,
+                "placeholder": "",
+                "required": true,
+                "show": true,
+                "title_case": false,
+                "type": "code",
+                "value": "# ============================================================\r\n# PASTE THIS ENTIRE FILE into LangFlow / lfx Custom Component\r\n# Component name: MedAgent — Agent 1 RAG Reader\r\n# RxNorm MCP tool built-in — validates drugs before LLM call\r\n# KB reads from local KBFILES folder — NOT hardcoded KB_DOCS\r\n# ============================================================\r\nfrom langflow.custom import Component\r\nfrom langflow.io import MessageTextInput, Output\r\nfrom langflow.schema.message import Message\r\n\r\nimport os, json, glob, httpx\r\nfrom langchain_openai import ChatOpenAI, OpenAIEmbeddings\r\nfrom langchain_core.messages import HumanMessage\r\nfrom langchain_core.prompts import ChatPromptTemplate\r\nfrom langchain_core.output_parsers import StrOutputParser\r\nfrom langchain_community.vectorstores import Chroma\r\nfrom langchain_text_splitters import RecursiveCharacterTextSplitter\r\nfrom langchain.schema import Document\r\n\r\n\r\n# ── KB folder path ────────────────────────────────────────────────────\r\n# Set this to your local KBFILES folder path.\r\n# Windows path — use raw string or forward slashes.\r\n# Override by setting the KB_DIR environment variable.\r\nKB_DIR_DEFAULT = r\"C:\\Users\\Yukth\\Downloads\\KBFILES\"\r\n\r\nAGENT1_SYS = \"\"\"You are a clinical pharmacist doing a routine drug interaction check.\r\n\r\nPatient: Age {age}y | Conditions: {conditions}\r\nMedications: {drug_a} {dose_a}mg {freq_a}  +  {drug_b} {dose_b}mg {freq_b}\r\nClinical question: {clinical_question}\r\n\r\nRETRIEVED KNOWLEDGE BASE CONTEXT (use ONLY this — do not add outside knowledge):\r\n{context}\r\n\r\nRules:\r\n- Base your answer ONLY on the context above\r\n- If the context does not mention this drug pair, state UNKNOWN severity\r\n- Do NOT invent mechanisms not present in the context\r\n\r\nRespond with:\r\n1. SEVERITY: [MAJOR / MODERATE / MINOR / UNKNOWN]\r\n2. SUMMARY: 2 sentences drawn from context\r\n3. CLINICAL ACTION: 2-3 bullet points\r\n4. SOURCE: quote the source tag from context (e.g. BNF 2024)\r\n\r\n⚠️ DISCLAIMER: AI-generated. Research only. Not medical advice.\"\"\"\r\n\r\n\r\nclass MedAgentRAGReader(Component):\r\n    display_name = \"MedAgent — Agent 1 RAG Reader\"\r\n    description  = (\r\n        \"Step 1: RxNorm MCP tool validates every drug name is real. \"\r\n        \"Step 2: ChromaDB semantic search on KBFILES folder documents. \"\r\n        \"Step 3: GPT-4o LLM analysis. \"\r\n        \"Unknown drugs are blocked before reaching the LLM — prevents hallucination.\"\r\n    )\r\n    icon = \"search\"\r\n    name = \"MedAgentRAGReader\"\r\n\r\n    inputs = [\r\n        MessageTextInput(\r\n            name=\"medications\",\r\n            display_name=\"Medications (name:dose_mg:frequency — one per line)\",\r\n            value=\"warfarin:5:daily\\naspirin:100:daily\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"patient_age\",\r\n            display_name=\"Patient Age\",\r\n            value=\"72\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"patient_conditions\",\r\n            display_name=\"Patient Conditions\",\r\n            value=\"atrial fibrillation, hypertension\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"clinical_question\",\r\n            display_name=\"Clinical Question\",\r\n            value=\"Is it safe to continue both medications?\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"openai_key\",\r\n            display_name=\"OpenAI API Key (sk-...)\",\r\n            value=\"\",\r\n        ),\r\n        # ── NEW: KB folder path input ─────────────────────────────────\r\n        # Users can override the default path directly in the LangFlow UI\r\n        MessageTextInput(\r\n            name=\"kb_dir\",\r\n            display_name=\"KB Folder Path (KBFILES directory)\",\r\n            value=KB_DIR_DEFAULT,\r\n            info=(\r\n                \"Path to the folder containing your .txt clinical KB documents. \"\r\n                \"Default: C:\\\\Users\\\\Yukth\\\\Downloads\\\\KBFILES. \"\r\n                \"All .txt files in this folder are loaded, chunked and embedded. \"\r\n                \"You can also set the KB_DIR environment variable to override.\"\r\n            ),\r\n        ),\r\n    ]\r\n\r\n    outputs = [\r\n        Output(\r\n            display_name=\"RAG Analysis Output\",\r\n            name=\"rag_output\",\r\n            method=\"build_output\",\r\n        ),\r\n    ]\r\n\r\n    # ── MCP Tool: RxNorm drug validation ─────────────────────────────\r\n    def _rxnorm_validate(self, drug_name: str) -> dict:\r\n        \"\"\"\r\n        MCP Tool: calls RxNorm API (free, no key needed) to check\r\n        whether a drug name is a real, recognised medication.\r\n        \"\"\"\r\n        try:\r\n            r = httpx.get(\r\n                \"https://rxnav.nlm.nih.gov/REST/rxcui.json\",\r\n                params={\"name\": drug_name, \"search\": 2},\r\n                timeout=5.0,\r\n            )\r\n            if r.status_code == 200:\r\n                data  = r.json()\r\n                rxcui = data.get(\"idGroup\", {}).get(\"rxnormId\", [])\r\n                if rxcui:\r\n                    name_r = httpx.get(\r\n                        f\"https://rxnav.nlm.nih.gov/REST/rxcui/{rxcui[0]}/property.json\",\r\n                        params={\"propName\": \"RxNorm Name\"},\r\n                        timeout=5.0,\r\n                    )\r\n                    label = drug_name\r\n                    if name_r.status_code == 200:\r\n                        props     = name_r.json().get(\"propConceptGroup\", {})\r\n                        prop_list = props.get(\"propConcept\", [])\r\n                        if prop_list:\r\n                            label = prop_list[0].get(\"propValue\", drug_name)\r\n                    return {\r\n                        \"drug\":   drug_name,\r\n                        \"found\":  True,\r\n                        \"rxcui\":  rxcui[0],\r\n                        \"label\":  label,\r\n                        \"status\": f\"✅ Validated — RxCUI: {rxcui[0]} ({label})\",\r\n                    }\r\n                return {\r\n                    \"drug\":   drug_name,\r\n                    \"found\":  False,\r\n                    \"rxcui\":  None,\r\n                    \"label\":  None,\r\n                    \"status\": f\"❌ NOT FOUND in RxNorm — possible fictional/misspelled drug\",\r\n                }\r\n        except Exception as e:\r\n            return {\r\n                \"drug\":   drug_name,\r\n                \"found\":  True,   # fail-open so RxNorm outage doesn't block all queries\r\n                \"rxcui\":  None,\r\n                \"label\":  drug_name,\r\n                \"status\": f\"⚠️ RxNorm unreachable ({e}) — proceeding without validation\",\r\n            }\r\n\r\n    # ── ChromaDB KB — reads from KBFILES folder ───────────────────────\r\n    def _get_kb(self, api_key: str) -> Chroma:\r\n        \"\"\"\r\n        Loads all .txt files from the KB folder, splits them into\r\n        500-token chunks with 50-token overlap, embeds with\r\n        text-embedding-3-small, and stores in ChromaDB.\r\n\r\n        Priority for folder path:\r\n          1. kb_dir input field (set in LangFlow UI)\r\n          2. KB_DIR environment variable\r\n          3. KB_DIR_DEFAULT constant at top of file\r\n        \"\"\"\r\n        # Resolve folder path\r\n        kb_dir = (\r\n            getattr(self, \"kb_dir\", \"\").strip()\r\n            or os.getenv(\"KB_DIR\", \"\")\r\n            or KB_DIR_DEFAULT\r\n        )\r\n\r\n        # Normalise path separators (handles Windows backslashes)\r\n        kb_dir = os.path.normpath(kb_dir)\r\n\r\n        # Find all .txt files in the folder\r\n        pattern   = os.path.join(kb_dir, \"*.txt\")\r\n        txt_files = sorted(glob.glob(pattern))\r\n\r\n        if not txt_files:\r\n            raise FileNotFoundError(\r\n                f\"No .txt files found in KB folder: {kb_dir}\\n\"\r\n                f\"Expected path: {kb_dir}\\n\"\r\n                f\"Please check the 'KB Folder Path' field in the component settings.\\n\"\r\n                f\"Files found in folder: {os.listdir(kb_dir) if os.path.exists(kb_dir) else 'FOLDER DOES NOT EXIST'}\"\r\n            )\r\n\r\n        # Load each .txt file as a Document\r\n        raw_docs = []\r\n        for fpath in txt_files:\r\n            try:\r\n                with open(fpath, encoding=\"utf-8\") as f:\r\n                    content = f.read()\r\n                raw_docs.append(Document(\r\n                    page_content=content,\r\n                    metadata={\r\n                        \"source\":   os.path.basename(fpath),\r\n                        \"filepath\": fpath,\r\n                    }\r\n                ))\r\n                print(f\"   ✅ Loaded KB file: {os.path.basename(fpath)} ({len(content):,} chars)\")\r\n            except Exception as e:\r\n                print(f\"   ⚠️  Could not load {fpath}: {e}\")\r\n\r\n        if not raw_docs:\r\n            raise ValueError(\r\n                f\"Found .txt files in {kb_dir} but could not load any of them. \"\r\n                f\"Check file encoding (must be UTF-8).\"\r\n            )\r\n\r\n        print(f\"   📚 Loaded {len(raw_docs)} KB documents from {kb_dir}\")\r\n\r\n        # Split into chunks\r\n        chunks = RecursiveCharacterTextSplitter(\r\n            chunk_size=500,\r\n            chunk_overlap=50,\r\n            separators=[\"\\n\\n\", \"\\n\", \". \", \" \", \"\"],\r\n        ).split_documents(raw_docs)\r\n\r\n        print(f\"   🔪 {len(chunks)} chunks created\")\r\n\r\n        # Embed with text-embedding-3-small (replaces HuggingFace MiniLM)\r\n        embeddings = OpenAIEmbeddings(\r\n            model=\"text-embedding-3-small\",\r\n            api_key=api_key,\r\n        )\r\n\r\n        db = Chroma.from_documents(\r\n            chunks,\r\n            embeddings,\r\n            collection_name=\"medagent_kbfiles\",\r\n            persist_directory=\"./chroma_medagent_kbfiles\",\r\n        )\r\n\r\n        print(f\"   ✅ ChromaDB ready — {len(chunks)} chunks embedded\")\r\n        return db\r\n\r\n    # ── Parse medication input ────────────────────────────────────────\r\n    def _parse_meds(self):\r\n        meds, parsed = {}, []\r\n        for line in self.medications.strip().split(\"\\n\"):\r\n            if not line.strip():\r\n                continue\r\n            parts = line.strip().split(\":\")\r\n            name  = parts[0].strip().lower()\r\n            dose  = parts[1].strip() if len(parts) > 1 else \"unknown\"\r\n            freq  = parts[2].strip() if len(parts) > 2 else \"daily\"\r\n            parsed.append({\"name\": name, \"dose\": dose, \"freq\": freq})\r\n            meds[name] = {\"dose\": dose, \"freq\": freq}\r\n        pairs = [\r\n            (parsed[i][\"name\"], parsed[j][\"name\"])\r\n            for i in range(len(parsed))\r\n            for j in range(i + 1, len(parsed))\r\n        ]\r\n        return pairs, meds\r\n\r\n    # ── Main build ────────────────────────────────────────────────────\r\n    def build_output(self) -> Message:\r\n        key = self.openai_key or os.getenv(\"OPENAI_API_KEY\", \"\")\r\n        if not key:\r\n            return Message(text=(\r\n                \"⛔ ERROR: OpenAI API key not set.\\n\"\r\n                \"Set it in the 'OpenAI API Key' field or via OPENAI_API_KEY env var.\"\r\n            ))\r\n\r\n        llm = ChatOpenAI(model=\"gpt-4o\", temperature=0.1, api_key=key, max_tokens=1200)\r\n\r\n        pairs, meds = self._parse_meds()\r\n\r\n        # ── STEP 1: RxNorm MCP validation ────────────────────────────\r\n        validation_log = []\r\n        blocked_drugs  = []\r\n\r\n        for drug_name in list(meds.keys()):\r\n            result = self._rxnorm_validate(drug_name)\r\n            validation_log.append(result[\"status\"])\r\n            if not result[\"found\"]:\r\n                blocked_drugs.append(drug_name)\r\n\r\n        if blocked_drugs:\r\n            return Message(text=(\r\n                f\"⛔ BLOCKED BY RxNorm MCP TOOL\\n\\n\"\r\n                f\"The following drug(s) were not found in RxNorm:\\n\"\r\n                + \"\\n\".join(f\"  • {d}\" for d in blocked_drugs)\r\n                + f\"\\n\\nRxNorm validation log:\\n\"\r\n                + \"\\n\".join(f\"  {v}\" for v in validation_log)\r\n                + f\"\\n\\nPlease check spelling or use the generic drug name.\\n\"\r\n                f\"MedAgent only assesses recognised medications.\\n\\n\"\r\n                f\"⚠️ DISCLAIMER: AI-generated. Research only. Not medical advice.\"\r\n            ))\r\n\r\n        # ── STEP 2: Load KB from folder + ChromaDB search + LLM ──────\r\n        try:\r\n            kb = self._get_kb(key)\r\n        except FileNotFoundError as e:\r\n            return Message(text=f\"⛔ KB FOLDER ERROR\\n\\n{e}\")\r\n        except Exception as e:\r\n            return Message(text=f\"⛔ KB LOADING ERROR\\n\\n{e}\")\r\n\r\n        results = []\r\n\r\n        for drug_a, drug_b in pairs:\r\n            docs    = kb.similarity_search(\r\n                f\"{drug_a} {drug_b} interaction severity mechanism\", k=4\r\n            )\r\n            context = \"\\n---\\n\".join(\r\n                f\"[source={d.metadata.get('source', '?')}] {d.page_content}\"\r\n                for d in docs\r\n            )\r\n            ma, mb = meds.get(drug_a, {}), meds.get(drug_b, {})\r\n            prompt = AGENT1_SYS.format(\r\n                age=self.patient_age,\r\n                conditions=self.patient_conditions,\r\n                drug_a=drug_a, dose_a=ma.get(\"dose\", \"?\"), freq_a=ma.get(\"freq\", \"daily\"),\r\n                drug_b=drug_b, dose_b=mb.get(\"dose\", \"?\"), freq_b=mb.get(\"freq\", \"daily\"),\r\n                clinical_question=self.clinical_question,\r\n                context=context,\r\n            )\r\n            chain  = (\r\n                ChatPromptTemplate.from_messages([HumanMessage(content=prompt)])\r\n                | llm\r\n                | StrOutputParser()\r\n            )\r\n            result = chain.invoke({})\r\n\r\n            severity = \"UNKNOWN\"\r\n            for lvl in [\"MAJOR\", \"MODERATE\", \"MINOR\"]:\r\n                if lvl in result.upper():\r\n                    severity = lvl\r\n                    break\r\n\r\n            results.append({\r\n                \"drug_a\":            drug_a,\r\n                \"drug_b\":            drug_b,\r\n                \"severity\":          severity,\r\n                \"summary\":           result,\r\n                \"rxnorm_validation\": validation_log,\r\n                \"kb_source\":         [d.metadata.get(\"source\") for d in docs],\r\n            })\r\n\r\n        return Message(text=json.dumps(results, indent=2))"
+              },
+              "kb_dir": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "KB Folder Path (KBFILES directory)",
+                "dynamic": false,
+                "info": "Path to the folder containing your .txt clinical KB documents. Default: C:\\Users\\Yukth\\Downloads\\KBFILES. All .txt files in this folder are loaded, chunked and embedded. You can also set the KB_DIR environment variable to override.",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "kb_dir",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "C:\\Users\\Yukth\\Downloads\\KBFILES"
+              },
+              "medications": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Medications (name:dose_mg:frequency — one per line)",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "medications",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "warfarin:5:daily\naspirin:100:daily"
+              },
+              "openai_key": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "OpenAI API Key (sk-...)",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "openai_key",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": ""
+              },
+              "patient_age": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Patient Age",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "patient_age",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "72"
+              },
+              "patient_conditions": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Patient Conditions",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "patient_conditions",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "atrial fibrillation, hypertension"
+              }
+            },
+            "tool_mode": false
+          },
+          "showNode": true,
+          "type": "MedAgentRAGReader"
+        },
+        "dragging": false,
+        "id": "CustomComponent-6pBLv",
+        "measured": {
+          "height": 676,
+          "width": 320
+        },
+        "position": {
+          "x": 480.1236006823898,
+          "y": 150.12986124337067
+        },
+        "selected": false,
+        "type": "genericNode"
+      },
+      {
+        "data": {
+          "id": "CustomComponent-W6X5u",
+          "node": {
+            "base_classes": [
+              "Message"
+            ],
+            "beta": false,
+            "conditional_paths": [],
+            "custom_fields": {},
+            "description": "Calls OpenFDA Adverse Events and Label APIs using synchronous httpx. Cross-validates Agent 1 RAG results against live FDA data. Outputs final validated severity as JSON for Report Compiler.",
+            "display_name": "MedAgent — Agent 2 ",
+            "documentation": "",
+            "edited": true,
+            "field_order": [
+              "rag_output",
+              "medications",
+              "patient_age",
+              "patient_conditions",
+              "openai_key"
+            ],
+            "frozen": false,
+            "icon": "shield",
+            "legacy": false,
+            "lf_version": "1.7.3",
+            "metadata": {
+              "code_hash": "40496c3ada81",
+              "dependencies": {
+                "dependencies": [
+                  {
+                    "name": "langflow",
+                    "version": "1.7.3"
+                  },
+                  {
+                    "name": "httpx",
+                    "version": "0.28.1"
+                  },
+                  {
+                    "name": "langchain_openai",
+                    "version": "0.3.35"
+                  },
+                  {
+                    "name": "langchain_core",
+                    "version": "0.3.83"
+                  }
+                ],
+                "total_dependencies": 4
+              },
+              "module": "custom_components.medagent__agent_2_fda_validator"
+            },
+            "minimized": false,
+            "output_types": [],
+            "outputs": [
+              {
+                "allows_loop": false,
+                "cache": true,
+                "display_name": "FDA Validation Output",
+                "group_outputs": false,
+                "hidden": null,
+                "loop_types": null,
+                "method": "build_output",
+                "name": "fda_output",
+                "options": null,
+                "required_inputs": null,
+                "selected": "Message",
+                "tool_mode": true,
+                "types": [
+                  "Message"
+                ],
+                "value": "__UNDEFINED__"
+              }
+            ],
+            "pinned": false,
+            "template": {
+              "_type": "Component",
+              "code": {
+                "advanced": true,
+                "dynamic": true,
+                "fileTypes": [],
+                "file_path": "",
+                "info": "",
+                "list": false,
+                "load_from_db": false,
+                "multiline": true,
+                "name": "code",
+                "password": false,
+                "placeholder": "",
+                "required": true,
+                "show": true,
+                "title_case": false,
+                "type": "code",
+                "value": "# ============================================================\r\n# COMPONENT 2 — PASTE THIS into Custom Component in LangFlow\r\n# Name: MedAgent — Agent 2 FDA Validator\r\n# Fix: replaced async _fev/_flb with sync httpx calls\r\n# ============================================================\r\nfrom langflow.custom import Component\r\nfrom langflow.io import MessageInput, MessageTextInput, Output\r\nfrom langflow.schema.message import Message\r\n \r\nimport os, json, httpx\r\nfrom langchain_openai import ChatOpenAI\r\nfrom langchain_core.messages import HumanMessage\r\nfrom langchain_core.prompts import ChatPromptTemplate\r\nfrom langchain_core.output_parsers import StrOutputParser\r\n \r\n \r\nAGENT2_SYS = \"\"\"You are a drug safety specialist cross-checking a drug interaction report.\r\n \r\nPatient: {age}y | Conditions: {conditions}\r\nDrugs: {drug_a} ({dose_a}mg {freq_a}) + {drug_b} ({dose_b}mg {freq_b})\r\n \r\nAGENT 1 KNOWLEDGE BASE FINDINGS (already verified from KB):\r\n{rag_summary}\r\n \r\nLIVE OPENFDA DATA (retrieved now — use these exact numbers):\r\n  {drug_a}: {events_a} adverse event reports | Top reactions: {reactions_a}\r\n  {drug_b}: {events_b} adverse event reports | Top reactions: {reactions_b}\r\n  {drug_a} boxed warning: {boxed_a}\r\n  {drug_a} label warnings: {warnings_a}\r\n  Drug interaction text ({drug_a} label): {interactions_a}\r\n \r\nRules:\r\n- Quote the exact FDA event numbers above — do not invent figures\r\n- If FDA data confirms Agent 1 findings, state this explicitly\r\n- If FDA data contradicts Agent 1 findings, explain the discrepancy\r\n- Base FINAL VALIDATED SEVERITY on both KB and FDA data combined\r\n \r\nRespond with:\r\n1. VALIDATION: Does FDA data confirm or contradict KB findings?\r\n2. FDA SIGNAL: Quote exact event count. Above 10000 is a strong signal.\r\n3. DOSE-SPECIFIC RISK: Does patient dose affect risk?\r\n4. PATIENT FACTORS: How do age and conditions modulate risk?\r\n5. FINAL VALIDATED SEVERITY: [MAJOR / MODERATE / MINOR / UNKNOWN]\r\n \r\n⚠️ DISCLAIMER: AI-generated. Research only. Not medical advice.\"\"\"\r\n \r\n \r\n \r\nclass MedAgentFDAValidator(Component):\r\n    display_name = \"MedAgent — Agent 2 FDA Validator\"\r\n    description  = (\r\n        \"Calls OpenFDA Adverse Events and Label APIs using synchronous httpx. \"\r\n        \"Cross-validates Agent 1 RAG results against live FDA data. \"\r\n        \"Outputs final validated severity as JSON for Report Compiler.\"\r\n    )\r\n    icon = \"shield\"\r\n    name = \"MedAgentFDAValidator\"\r\n \r\n    inputs = [\r\n        MessageInput(\r\n            name=\"rag_output\",\r\n            display_name=\"Agent 1 RAG Output (connect from Agent 1)\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"medications\",\r\n            display_name=\"Medications (name:dose_mg:frequency — one per line)\",\r\n            value=\"warfarin:5:daily\\naspirin:100:daily\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"patient_age\",\r\n            display_name=\"Patient Age\",\r\n            value=\"72\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"patient_conditions\",\r\n            display_name=\"Patient Conditions\",\r\n            value=\"atrial fibrillation, hypertension\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"openai_key\",\r\n            display_name=\"OpenAI API Key (sk-...)\",\r\n            value=\"\",\r\n        ),\r\n    ]\r\n \r\n    outputs = [\r\n        Output(\r\n            display_name=\"FDA Validation Output\",\r\n            name=\"fda_output\",\r\n            method=\"build_output\",\r\n        ),\r\n    ]\r\n \r\n    # ── FDA Tool 1: Adverse Events (sync) ─────────────────────────────\r\n    def get_adverse_events(self, drug):\r\n        url    = \"https://api.fda.gov/drug/event.json\"\r\n        params = {\r\n            \"search\": f\"patient.drug.medicinalproduct:{drug}\",\r\n            \"limit\":  5,\r\n            \"count\":  \"patient.reaction.reactionmeddrapt.exact\",\r\n        }\r\n        try:\r\n            r = httpx.get(url, params=params, timeout=10.0)\r\n            if r.status_code == 200:\r\n                data = r.json()\r\n                total = data.get(\"meta\", {}).get(\"results\", {}).get(\"total\", 0)\r\n                terms = [x[\"term\"] for x in data.get(\"results\", [])[:5]]\r\n                return {\"drug\": drug, \"total_events\": total, \"top_reactions\": terms}\r\n        except Exception as e:\r\n            print(f\"   FDA events error for {drug}: {e}\")\r\n        return {\"drug\": drug, \"total_events\": 0, \"top_reactions\": []}\r\n \r\n    # ── FDA Tool 2: Drug Label (sync) ─────────────────────────────────\r\n    def get_drug_label(self, drug):\r\n        url    = \"https://api.fda.gov/drug/label.json\"\r\n        params = {\"search\": f\"openfda.generic_name:{drug}\", \"limit\": 1}\r\n        try:\r\n            r = httpx.get(url, params=params, timeout=10.0)\r\n            if r.status_code == 200:\r\n                rec = r.json().get(\"results\", [{}])[0]\r\n                return {\r\n                    \"drug\":             drug,\r\n                    \"boxed_warning\":    (rec.get(\"boxed_warning\")    or [\"None\"])[0][:300],\r\n                    \"warnings\":         (rec.get(\"warnings\")         or [\"No data\"])[0][:400],\r\n                    \"drug_interactions\":(rec.get(\"drug_interactions\") or [\"No data\"])[0][:400],\r\n                }\r\n        except Exception as e:\r\n            print(f\"   FDA label error for {drug}: {e}\")\r\n        return {\r\n            \"drug\":              drug,\r\n            \"boxed_warning\":     \"None\",\r\n            \"warnings\":          \"Not found\",\r\n            \"drug_interactions\": \"Not found\",\r\n        }\r\n \r\n    # ── Parse medications ─────────────────────────────────────────────\r\n    def parse_meds(self):\r\n        meds, parsed = {}, []\r\n        for line in self.medications.strip().split(\"\\n\"):\r\n            if not line.strip():\r\n                continue\r\n            parts = line.strip().split(\":\")\r\n            name  = parts[0].strip().lower()\r\n            dose  = parts[1].strip() if len(parts) > 1 else \"unknown\"\r\n            freq  = parts[2].strip() if len(parts) > 2 else \"daily\"\r\n            parsed.append({\"name\": name, \"dose\": dose, \"freq\": freq})\r\n            meds[name] = {\"dose\": dose, \"freq\": freq}\r\n        pairs = [\r\n            (parsed[i][\"name\"], parsed[j][\"name\"])\r\n            for i in range(len(parsed))\r\n            for j in range(i + 1, len(parsed))\r\n        ]\r\n        return pairs, meds\r\n \r\n    # ── Main ──────────────────────────────────────────────────────────\r\n    def build_output(self) -> Message:\r\n \r\n        # Parse Agent 1 input\r\n        rag_text = \"\"\r\n        if self.rag_output:\r\n            rag_text = (\r\n                self.rag_output.text\r\n                if hasattr(self.rag_output, \"text\")\r\n                else str(self.rag_output)\r\n            )\r\n        try:\r\n            rag_results = json.loads(rag_text)\r\n            if not isinstance(rag_results, list):\r\n                rag_results = [rag_results]\r\n        except Exception:\r\n            rag_results = [{\r\n                \"drug_a\":   \"unknown\",\r\n                \"drug_b\":   \"unknown\",\r\n                \"severity\": \"UNKNOWN\",\r\n                \"summary\":  rag_text,\r\n            }]\r\n \r\n        # Pass through skip or blocked signals unchanged\r\n        if rag_results and rag_results[0].get(\"skip\"):\r\n            return Message(text=json.dumps(rag_results, indent=2))\r\n        if rag_results and rag_results[0].get(\"blocked\"):\r\n            return Message(text=json.dumps(rag_results, indent=2))\r\n \r\n        key = self.openai_key or os.getenv(\"OPENAI_API_KEY\", \"\")\r\n        llm = ChatOpenAI(\r\n            model=\"gpt-4o\",\r\n            temperature=0.1,\r\n            api_key=key,\r\n            max_tokens=1200,\r\n        )\r\n \r\n        pairs, meds  = self.parse_meds()\r\n        fda_results  = []\r\n \r\n        for i, (drug_a, drug_b) in enumerate(pairs):\r\n \r\n            rag_entry = rag_results[i] if i < len(rag_results) else rag_results[0]\r\n            ma = meds.get(drug_a, {})\r\n            mb = meds.get(drug_b, {})\r\n \r\n            # Call FDA APIs synchronously\r\n            print(f\"   🔬 FDA lookup: {drug_a} + {drug_b}\")\r\n            ev_a = self.get_adverse_events(drug_a)\r\n            ev_b = self.get_adverse_events(drug_b)\r\n            lb_a = self.get_drug_label(drug_a)\r\n            lb_b = self.get_drug_label(drug_b)\r\n \r\n            prompt = AGENT2_SYS.format(\r\n                age=self.patient_age,\r\n                conditions=self.patient_conditions,\r\n                drug_a=drug_a,\r\n                dose_a=ma.get(\"dose\", \"?\"),\r\n                freq_a=ma.get(\"freq\", \"daily\"),\r\n                drug_b=drug_b,\r\n                dose_b=mb.get(\"dose\", \"?\"),\r\n                freq_b=mb.get(\"freq\", \"daily\"),\r\n                rag_summary=rag_entry.get(\"summary\", \"\")[:800],\r\n                events_a=ev_a.get(\"total_events\", 0),\r\n                reactions_a=\", \".join(ev_a.get(\"top_reactions\", [\"none\"])),\r\n                events_b=ev_b.get(\"total_events\", 0),\r\n                reactions_b=\", \".join(ev_b.get(\"top_reactions\", [\"none\"])),\r\n                boxed_a=lb_a.get(\"boxed_warning\", \"None\")[:250],\r\n                warnings_a=lb_a.get(\"warnings\", \"None\")[:300],\r\n                interactions_a=lb_a.get(\"drug_interactions\", \"None\")[:300],\r\n            )\r\n \r\n            chain     = (\r\n                ChatPromptTemplate.from_messages([HumanMessage(content=prompt)])\r\n                | llm\r\n                | StrOutputParser()\r\n            )\r\n            validated = chain.invoke({})\r\n \r\n            # Update severity from FDA validation\r\n            severity = rag_entry.get(\"severity\", \"UNKNOWN\")\r\n            for lvl in [\"MAJOR\", \"MODERATE\", \"MINOR\"]:\r\n                if lvl in validated.upper():\r\n                    severity = lvl\r\n                    break\r\n \r\n            fda_results.append({\r\n                \"drug_a\":          drug_a,\r\n                \"drug_b\":          drug_b,\r\n                \"fda_events_a\":    ev_a.get(\"total_events\", 0),\r\n                \"fda_events_b\":    ev_b.get(\"total_events\", 0),\r\n                \"top_reactions_a\": ev_a.get(\"top_reactions\", []),\r\n                \"top_reactions_b\": ev_b.get(\"top_reactions\", []),\r\n                \"label_warning_a\": lb_a.get(\"warnings\", \"\")[:300],\r\n                \"validation\":      validated,\r\n                \"final_severity\":  severity,\r\n                \"rag_summary\":     rag_entry.get(\"summary\", \"\"),\r\n            })\r\n \r\n            print(f\"   ✅ {drug_a} + {drug_b} → {severity}\")\r\n \r\n        return Message(text=json.dumps(fda_results, indent=2))"
+              },
+              "medications": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Medications (name:dose_mg:frequency — one per line)",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "medications",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "warfarin:5:daily\naspirin:100:daily"
+              },
+              "openai_key": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "OpenAI API Key (sk-...)",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "openai_key",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": ""
+              },
+              "patient_age": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Patient Age",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "patient_age",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "72"
+              },
+              "patient_conditions": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Patient Conditions",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "patient_conditions",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "atrial fibrillation, hypertension"
+              },
+              "rag_output": {
+                "_input_type": "MessageInput",
+                "advanced": false,
+                "display_name": "Agent 1 RAG Output (connect from Agent 1)",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "rag_output",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": ""
+              }
+            },
+            "tool_mode": false
+          },
+          "showNode": true,
+          "type": "MedAgentFDAValidator"
+        },
+        "dragging": false,
+        "id": "CustomComponent-W6X5u",
+        "measured": {
+          "height": 578,
+          "width": 320
+        },
+        "position": {
+          "x": 952.4619748487034,
+          "y": 164.6175155250849
+        },
+        "selected": false,
+        "type": "genericNode"
+      },
+      {
+        "data": {
+          "id": "CustomComponent-ITuq6",
+          "node": {
+            "base_classes": [
+              "Message"
+            ],
+            "beta": false,
+            "conditional_paths": [],
+            "custom_fields": {},
+            "description": "Takes Agent 2 FDA output and produces a clean readable clinical drug interaction report. Output goes directly to Chat Output — plain text, no JSON.",
+            "display_name": "MedAgent — Report Compiler",
+            "documentation": "",
+            "edited": true,
+            "field_order": [
+              "fda_output",
+              "medications",
+              "patient_age",
+              "patient_conditions",
+              "clinical_question",
+              "openai_key"
+            ],
+            "frozen": false,
+            "icon": "file-text",
+            "legacy": false,
+            "lf_version": "1.7.3",
+            "metadata": {
+              "code_hash": "c088d973094c",
+              "dependencies": {
+                "dependencies": [
+                  {
+                    "name": "langflow",
+                    "version": "1.7.3"
+                  },
+                  {
+                    "name": "langchain_openai",
+                    "version": "0.3.35"
+                  },
+                  {
+                    "name": "langchain_core",
+                    "version": "0.3.83"
+                  }
+                ],
+                "total_dependencies": 3
+              },
+              "module": "custom_components.medagent__report_compiler"
+            },
+            "minimized": false,
+            "output_types": [],
+            "outputs": [
+              {
+                "allows_loop": false,
+                "cache": true,
+                "display_name": "Clinical Report",
+                "group_outputs": false,
+                "hidden": null,
+                "loop_types": null,
+                "method": "build_output",
+                "name": "report_output",
+                "options": null,
+                "required_inputs": null,
+                "selected": "Message",
+                "tool_mode": true,
+                "types": [
+                  "Message"
+                ],
+                "value": "__UNDEFINED__"
+              }
+            ],
+            "pinned": false,
+            "template": {
+              "_type": "Component",
+              "clinical_question": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Clinical Question",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "clinical_question",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "Is it safe to continue both medications?"
+              },
+              "code": {
+                "advanced": true,
+                "dynamic": true,
+                "fileTypes": [],
+                "file_path": "",
+                "info": "",
+                "list": false,
+                "load_from_db": false,
+                "multiline": true,
+                "name": "code",
+                "password": false,
+                "placeholder": "",
+                "required": true,
+                "show": true,
+                "title_case": false,
+                "type": "code",
+                "value": "# ============================================================\r\n# COMPONENT 3 — PASTE THIS into Custom Component in LangFlow\r\n# Name: MedAgent — Report Compiler\r\n# Fix: returns clean plain text Message for Chat Output\r\n# ============================================================\r\nfrom langflow.custom import Component\r\nfrom langflow.io import MessageInput, MessageTextInput, Output\r\nfrom langflow.schema.message import Message\r\n \r\nimport os, json\r\nfrom langchain_openai import ChatOpenAI\r\nfrom langchain_core.messages import HumanMessage\r\nfrom langchain_core.prompts import ChatPromptTemplate\r\nfrom langchain_core.output_parsers import StrOutputParser\r\n \r\n \r\nCOMPILER_SYS = \"\"\"You are a senior clinical pharmacist writing a formal interaction report.\r\n \r\nPatient: {age}y | Conditions: {conditions}\r\nClinical question: {clinical_question}\r\n \r\nDrug pair: {drug_a} ({dose_a}mg {freq_a}) + {drug_b} ({dose_b}mg {freq_b})\r\nKnowledge Base (Agent 1): {rag_summary}\r\nFDA Validation (Agent 2): {fda_validation}\r\nFDA adverse events: {drug_a}={events_a} | {drug_b}={events_b}\r\nTop reactions: {top_reactions}\r\n \r\nWrite exactly these sections:\r\n \r\nSEVERITY: [MAJOR/MODERATE/MINOR/UNKNOWN]\r\n \r\nSUMMARY:\r\n[2-3 sentences — what is the interaction and why it matters for THIS patient]\r\n \r\nMECHANISM:\r\n[2 sentences — pharmacological mechanism]\r\n \r\nDOSE CONSIDERATION:\r\n[1 sentence — does the patient specific dose affect risk?]\r\n \r\nCLINICAL ACTION:\r\n- [bullet point 1]\r\n- [bullet point 2]\r\n- [bullet point 3]\r\n \r\nPATIENT ADVICE:\r\n[2-3 plain-language sentences for the patient]\r\n \r\nSOURCES: Knowledge base + OpenFDA (open.fda.gov)\"\"\"\r\n \r\nOVERALL_SYS = \"\"\"Summarise a multi-drug interaction assessment.\r\n \r\nPatient: {age}y | {conditions} | Question: {clinical_question}\r\nMedications: {meds}\r\n \r\nIndividual findings:\r\n{summaries}\r\n \r\nWrite:\r\nOVERALL SUMMARY:\r\n[3-4 sentences, most clinically important finding first]\r\n \r\nPRIORITISED RECOMMENDATIONS:\r\n1. [most urgent]\r\n2. [second]\r\n3. [third]\"\"\"\r\n \r\n \r\nclass MedAgentReportCompiler(Component):\r\n    display_name = \"MedAgent — Report Compiler\"\r\n    description  = (\r\n        \"Takes Agent 2 FDA output and produces a clean readable \"\r\n        \"clinical drug interaction report. Output goes directly to \"\r\n        \"Chat Output — plain text, no JSON.\"\r\n    )\r\n    icon = \"file-text\"\r\n    name = \"MedAgentReportCompiler\"\r\n \r\n    inputs = [\r\n        MessageInput(\r\n            name=\"fda_output\",\r\n            display_name=\"Agent 2 FDA Output (connect from Agent 2)\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"medications\",\r\n            display_name=\"Medications (name:dose_mg:frequency — one per line)\",\r\n            value=\"warfarin:5:daily\\naspirin:100:daily\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"patient_age\",\r\n            display_name=\"Patient Age\",\r\n            value=\"72\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"patient_conditions\",\r\n            display_name=\"Patient Conditions\",\r\n            value=\"atrial fibrillation, hypertension\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"clinical_question\",\r\n            display_name=\"Clinical Question\",\r\n            value=\"Is it safe to continue both medications?\",\r\n        ),\r\n        MessageTextInput(\r\n            name=\"openai_key\",\r\n            display_name=\"OpenAI API Key (sk-...)\",\r\n            value=\"\",\r\n        ),\r\n    ]\r\n \r\n    outputs = [\r\n        Output(\r\n            display_name=\"Clinical Report\",\r\n            name=\"report_output\",\r\n            method=\"build_output\",\r\n        ),\r\n    ]\r\n \r\n    def _get_llm(self):\r\n        key = self.openai_key or os.getenv(\"OPENAI_API_KEY\", \"\")\r\n        return ChatOpenAI(\r\n            model=\"gpt-4o\",\r\n            temperature=0.1,\r\n            api_key=key,\r\n            max_tokens=1500,\r\n        )\r\n \r\n    def _parse_meds(self):\r\n        meds, parsed = {}, []\r\n        for line in self.medications.strip().split(\"\\n\"):\r\n            if not line.strip():\r\n                continue\r\n            parts = line.strip().split(\":\")\r\n            name  = parts[0].strip().lower()\r\n            dose  = parts[1].strip() if len(parts) > 1 else \"unknown\"\r\n            freq  = parts[2].strip() if len(parts) > 2 else \"daily\"\r\n            parsed.append({\"name\": name, \"dose\": dose, \"freq\": freq})\r\n            meds[name] = {\"dose\": dose, \"freq\": freq}\r\n        pairs = [\r\n            (parsed[i][\"name\"], parsed[j][\"name\"])\r\n            for i in range(len(parsed))\r\n            for j in range(i + 1, len(parsed))\r\n        ]\r\n        return pairs, meds\r\n \r\n    def build_output(self) -> Message:\r\n \r\n        # ── Parse Agent 2 input ───────────────────────────────────────\r\n        fda_text = \"\"\r\n        if self.fda_output:\r\n            fda_text = (\r\n                self.fda_output.text\r\n                if hasattr(self.fda_output, \"text\")\r\n                else str(self.fda_output)\r\n            )\r\n \r\n        try:\r\n            fda_results = json.loads(fda_text)\r\n            if not isinstance(fda_results, list):\r\n                fda_results = [fda_results]\r\n        except Exception:\r\n            # fda_output is already plain text — wrap it\r\n            fda_results = [{\r\n                \"drug_a\":          \"drug A\",\r\n                \"drug_b\":          \"drug B\",\r\n                \"final_severity\":  \"UNKNOWN\",\r\n                \"validation\":      fda_text,\r\n                \"rag_summary\":     \"\",\r\n                \"fda_events_a\":    0,\r\n                \"fda_events_b\":    0,\r\n                \"top_reactions_a\": [],\r\n                \"top_reactions_b\": [],\r\n            }]\r\n \r\n        llm         = self._get_llm()\r\n        pairs, meds = self._parse_meds()\r\n        sev_rank    = {\"MAJOR\": 3, \"MODERATE\": 2, \"MINOR\": 1, \"UNKNOWN\": 0}\r\n        reports     = []\r\n \r\n        for fda in fda_results:\r\n \r\n            # Skip signal from supervisor pattern\r\n            if fda.get(\"skip\"):\r\n                continue\r\n \r\n            # Blocked by RxNorm\r\n            if fda.get(\"blocked\"):\r\n                reports.append({\r\n                    \"pair\":     f\"{fda.get('drug_a','')} + {fda.get('drug_b','')}\",\r\n                    \"severity\": \"BLOCKED\",\r\n                    \"report\":   fda.get(\"summary\", fda.get(\"message\", \"Drug blocked by RxNorm validation.\")),\r\n                })\r\n                continue\r\n \r\n            drug_a = fda.get(\"drug_a\", \"\")\r\n            drug_b = fda.get(\"drug_b\", \"\")\r\n            ma     = meds.get(drug_a, {})\r\n            mb     = meds.get(drug_b, {})\r\n            top_rx = list(set(\r\n                fda.get(\"top_reactions_a\", []) +\r\n                fda.get(\"top_reactions_b\", [])\r\n            ))[:5]\r\n \r\n            prompt = COMPILER_SYS.format(\r\n                age=self.patient_age,\r\n                conditions=self.patient_conditions,\r\n                clinical_question=self.clinical_question,\r\n                drug_a=drug_a,\r\n                dose_a=ma.get(\"dose\", \"?\"),\r\n                freq_a=ma.get(\"freq\", \"daily\"),\r\n                drug_b=drug_b,\r\n                dose_b=mb.get(\"dose\", \"?\"),\r\n                freq_b=mb.get(\"freq\", \"daily\"),\r\n                rag_summary=fda.get(\"rag_summary\", \"\")[:800],\r\n                fda_validation=fda.get(\"validation\", \"\")[:800],\r\n                events_a=fda.get(\"fda_events_a\", 0),\r\n                events_b=fda.get(\"fda_events_b\", 0),\r\n                top_reactions=\", \".join(top_rx) or \"none recorded\",\r\n            )\r\n \r\n            chain  = (\r\n                ChatPromptTemplate.from_messages([HumanMessage(content=prompt)])\r\n                | llm\r\n                | StrOutputParser()\r\n            )\r\n            report = chain.invoke({})\r\n \r\n            reports.append({\r\n                \"pair\":     f\"{drug_a} + {drug_b}\",\r\n                \"severity\": fda.get(\"final_severity\", \"UNKNOWN\"),\r\n                \"report\":   report,\r\n            })\r\n \r\n        if not reports:\r\n            return Message(text=(\r\n                \"No drug pairs were processed.\\n\"\r\n                \"Please check that Agent 1 and Agent 2 are connected correctly.\\n\\n\"\r\n                \"⚠️ DISCLAIMER: AI-generated. Research only. Not medical advice.\"\r\n            ))\r\n \r\n        # ── Overall summary ───────────────────────────────────────────\r\n        highest   = max(reports, key=lambda r: sev_rank.get(r[\"severity\"], 0))\r\n        summaries = \"\\n\\n\".join(\r\n            f\"[{r['pair']} — {r['severity']}]\\n{r['report'][:400]}\"\r\n            for r in reports\r\n        )\r\n \r\n        overall_prompt = OVERALL_SYS.format(\r\n            age=self.patient_age,\r\n            conditions=self.patient_conditions,\r\n            clinical_question=self.clinical_question,\r\n            meds=self.medications.replace(\"\\n\", \", \"),\r\n            summaries=summaries,\r\n        )\r\n        chain   = (\r\n            ChatPromptTemplate.from_messages([HumanMessage(content=overall_prompt)])\r\n            | llm\r\n            | StrOutputParser()\r\n        )\r\n        overall = chain.invoke({})\r\n \r\n        # ── Build final plain text output ─────────────────────────────\r\n        # This is what Chat Output displays\r\n        divider = \"\\n\" + \"=\" * 55 + \"\\n\"\r\n \r\n        sections = []\r\n        sections.append(\r\n            f\"🏥 MEDAGENT AI — DRUG INTERACTION REPORT\\n\"\r\n            f\"Patient: {self.patient_age}y | {self.patient_conditions}\\n\"\r\n            f\"Highest severity: {highest['severity']}\"\r\n        )\r\n \r\n        for r in reports:\r\n            sev_icon = (\r\n                \"🔴\" if r[\"severity\"] == \"MAJOR\"\r\n                else \"🟠\" if r[\"severity\"] == \"MODERATE\"\r\n                else \"🟡\" if r[\"severity\"] == \"MINOR\"\r\n                else \"⛔\" if r[\"severity\"] == \"BLOCKED\"\r\n                else \"⚪\"\r\n            )\r\n            sections.append(\r\n                f\"{sev_icon} {r['pair'].upper()}\\n\\n{r['report']}\"\r\n            )\r\n \r\n        sections.append(overall)\r\n        sections.append(\r\n            \"⚠️ DISCLAIMER: AI-generated content for research \"\r\n            \"purposes only. Does NOT constitute medical advice. \"\r\n            \"Consult a qualified pharmacist or physician before \"\r\n            \"any clinical decision.\"\r\n        )\r\n \r\n        final_text = divider.join(sections)\r\n \r\n        return Message(text=final_text)\r\n "
+              },
+              "fda_output": {
+                "_input_type": "MessageInput",
+                "advanced": false,
+                "display_name": "Agent 2 FDA Output (connect from Agent 2)",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "fda_output",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": ""
+              },
+              "medications": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Medications (name:dose_mg:frequency — one per line)",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "medications",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "warfarin:5:daily\naspirin:100:daily"
+              },
+              "openai_key": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "OpenAI API Key (sk-...)",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "openai_key",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": ""              },
+              "patient_age": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Patient Age",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "patient_age",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "72"
+              },
+              "patient_conditions": {
+                "_input_type": "MessageTextInput",
+                "advanced": false,
+                "display_name": "Patient Conditions",
+                "dynamic": false,
+                "info": "",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "patient_conditions",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "atrial fibrillation, hypertension"
+              }
+            },
+            "tool_mode": false
+          },
+          "showNode": true,
+          "type": "MedAgentReportCompiler"
+        },
+        "dragging": false,
+        "id": "CustomComponent-ITuq6",
+        "measured": {
+          "height": 660,
+          "width": 320
+        },
+        "position": {
+          "x": 1357.4619748487034,
+          "y": 182.6175155250849
+        },
+        "selected": false,
+        "type": "genericNode"
+      },
+      {
+        "data": {
+          "id": "ChatOutput-Y1teN",
+          "node": {
+            "base_classes": [
+              "Message"
+            ],
+            "beta": false,
+            "conditional_paths": [],
+            "custom_fields": {},
+            "description": "",
+            "display_name": "Chat Output",
+            "documentation": "https://docs.langflow.org/chat-input-and-output",
+            "edited": false,
+            "field_order": [
+              "input_value",
+              "should_store_message",
+              "sender",
+              "sender_name",
+              "session_id",
+              "context_id",
+              "data_template",
+              "clean_data"
+            ],
+            "frozen": false,
+            "icon": "MessagesSquare",
+            "legacy": false,
+            "lf_version": "1.7.3",
+            "metadata": {
+              "code_hash": "8c87e536cca4",
+              "dependencies": {
+                "dependencies": [
+                  {
+                    "name": "orjson",
+                    "version": "3.10.15"
+                  },
+                  {
+                    "name": "fastapi",
+                    "version": "0.129.0"
+                  },
+                  {
+                    "name": "lfx",
+                    "version": "0.2.1"
+                  }
+                ],
+                "total_dependencies": 3
+              },
+              "module": "custom_components.chat_output"
+            },
+            "minimized": true,
+            "output_types": [],
+            "outputs": [
+              {
+                "allows_loop": false,
+                "cache": true,
+                "display_name": "Output Message",
+                "group_outputs": false,
+                "hidden": null,
+                "loop_types": null,
+                "method": "message_response",
+                "name": "message",
+                "options": null,
+                "required_inputs": null,
+                "selected": "Message",
+                "tool_mode": true,
+                "types": [
+                  "Message"
+                ],
+                "value": "__UNDEFINED__"
+              }
+            ],
+            "pinned": false,
+            "template": {
+              "_type": "Component",
+              "clean_data": {
+                "_input_type": "BoolInput",
+                "advanced": true,
+                "display_name": "Basic Clean Data",
+                "dynamic": false,
+                "info": "Whether to clean data before converting to string.",
+                "list": false,
+                "list_add_label": "Add More",
+                "name": "clean_data",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_metadata": true,
+                "track_in_telemetry": true,
+                "type": "bool",
+                "value": true
+              },
+              "code": {
+                "advanced": true,
+                "dynamic": true,
+                "fileTypes": [],
+                "file_path": "",
+                "info": "",
+                "list": false,
+                "load_from_db": false,
+                "multiline": true,
+                "name": "code",
+                "password": false,
+                "placeholder": "",
+                "required": true,
+                "show": true,
+                "title_case": false,
+                "type": "code",
+                "value": "from collections.abc import Generator\nfrom typing import Any\n\nimport orjson\nfrom fastapi.encoders import jsonable_encoder\n\nfrom lfx.base.io.chat import ChatComponent\nfrom lfx.helpers.data import safe_convert\nfrom lfx.inputs.inputs import BoolInput, DropdownInput, HandleInput, MessageTextInput\nfrom lfx.schema.data import Data\nfrom lfx.schema.dataframe import DataFrame\nfrom lfx.schema.message import Message\nfrom lfx.schema.properties import Source\nfrom lfx.template.field.base import Output\nfrom lfx.utils.constants import (\n    MESSAGE_SENDER_AI,\n    MESSAGE_SENDER_NAME_AI,\n    MESSAGE_SENDER_USER,\n)\n\n\nclass ChatOutput(ChatComponent):\n    display_name = \"Chat Output\"\n    description = \"Display a chat message in the Playground.\"\n    documentation: str = \"https://docs.langflow.org/chat-input-and-output\"\n    icon = \"MessagesSquare\"\n    name = \"ChatOutput\"\n    minimized = True\n\n    inputs = [\n        HandleInput(\n            name=\"input_value\",\n            display_name=\"Inputs\",\n            info=\"Message to be passed as output.\",\n            input_types=[\"Data\", \"DataFrame\", \"Message\"],\n            required=True,\n        ),\n        BoolInput(\n            name=\"should_store_message\",\n            display_name=\"Store Messages\",\n            info=\"Store the message in the history.\",\n            value=True,\n            advanced=True,\n        ),\n        DropdownInput(\n            name=\"sender\",\n            display_name=\"Sender Type\",\n            options=[MESSAGE_SENDER_AI, MESSAGE_SENDER_USER],\n            value=MESSAGE_SENDER_AI,\n            advanced=True,\n            info=\"Type of sender.\",\n        ),\n        MessageTextInput(\n            name=\"sender_name\",\n            display_name=\"Sender Name\",\n            info=\"Name of the sender.\",\n            value=MESSAGE_SENDER_NAME_AI,\n            advanced=True,\n        ),\n        MessageTextInput(\n            name=\"session_id\",\n            display_name=\"Session ID\",\n            info=\"The session ID of the chat. If empty, the current session ID parameter will be used.\",\n            advanced=True,\n        ),\n        MessageTextInput(\n            name=\"context_id\",\n            display_name=\"Context ID\",\n            info=\"The context ID of the chat. Adds an extra layer to the local memory.\",\n            value=\"\",\n            advanced=True,\n        ),\n        MessageTextInput(\n            name=\"data_template\",\n            display_name=\"Data Template\",\n            value=\"{text}\",\n            advanced=True,\n            info=\"Template to convert Data to Text. If left empty, it will be dynamically set to the Data's text key.\",\n        ),\n        BoolInput(\n            name=\"clean_data\",\n            display_name=\"Basic Clean Data\",\n            value=True,\n            advanced=True,\n            info=\"Whether to clean data before converting to string.\",\n        ),\n    ]\n    outputs = [\n        Output(\n            display_name=\"Output Message\",\n            name=\"message\",\n            method=\"message_response\",\n        ),\n    ]\n\n    def _build_source(self, id_: str | None, display_name: str | None, source: str | None) -> Source:\n        source_dict = {}\n        if id_:\n            source_dict[\"id\"] = id_\n        if display_name:\n            source_dict[\"display_name\"] = display_name\n        if source:\n            # Handle case where source is a ChatOpenAI object\n            if hasattr(source, \"model_name\"):\n                source_dict[\"source\"] = source.model_name\n            elif hasattr(source, \"model\"):\n                source_dict[\"source\"] = str(source.model)\n            else:\n                source_dict[\"source\"] = str(source)\n        return Source(**source_dict)\n\n    async def message_response(self) -> Message:\n        # First convert the input to string if needed\n        text = self.convert_to_string()\n\n        # Get source properties\n        source, _, display_name, source_id = self.get_properties_from_source_component()\n\n        # Create or use existing Message object\n        if isinstance(self.input_value, Message) and not self.is_connected_to_chat_input():\n            message = self.input_value\n            # Update message properties\n            message.text = text\n            # Preserve existing session_id from the incoming message if it exists\n            existing_session_id = message.session_id\n        else:\n            message = Message(text=text)\n            existing_session_id = None\n\n        # Set message properties\n        message.sender = self.sender\n        message.sender_name = self.sender_name\n        # Preserve session_id from incoming message, or use component/graph session_id\n        message.session_id = (\n            self.session_id or existing_session_id or (self.graph.session_id if hasattr(self, \"graph\") else None) or \"\"\n        )\n        message.context_id = self.context_id\n        message.flow_id = self.graph.flow_id if hasattr(self, \"graph\") else None\n        message.properties.source = self._build_source(source_id, display_name, source)\n\n        # Store message if needed\n        if message.session_id and self.should_store_message:\n            stored_message = await self.send_message(message)\n            self.message.value = stored_message\n            message = stored_message\n\n        self.status = message\n        return message\n\n    def _serialize_data(self, data: Data) -> str:\n        \"\"\"Serialize Data object to JSON string.\"\"\"\n        # Convert data.data to JSON-serializable format\n        serializable_data = jsonable_encoder(data.data)\n        # Serialize with orjson, enabling pretty printing with indentation\n        json_bytes = orjson.dumps(serializable_data, option=orjson.OPT_INDENT_2)\n        # Convert bytes to string and wrap in Markdown code blocks\n        return \"```json\\n\" + json_bytes.decode(\"utf-8\") + \"\\n```\"\n\n    def _validate_input(self) -> None:\n        \"\"\"Validate the input data and raise ValueError if invalid.\"\"\"\n        if self.input_value is None:\n            msg = \"Input data cannot be None\"\n            raise ValueError(msg)\n        if isinstance(self.input_value, list) and not all(\n            isinstance(item, Message | Data | DataFrame | str) for item in self.input_value\n        ):\n            invalid_types = [\n                type(item).__name__\n                for item in self.input_value\n                if not isinstance(item, Message | Data | DataFrame | str)\n            ]\n            msg = f\"Expected Data or DataFrame or Message or str, got {invalid_types}\"\n            raise TypeError(msg)\n        if not isinstance(\n            self.input_value,\n            Message | Data | DataFrame | str | list | Generator | type(None),\n        ):\n            type_name = type(self.input_value).__name__\n            msg = f\"Expected Data or DataFrame or Message or str, Generator or None, got {type_name}\"\n            raise TypeError(msg)\n\n    def convert_to_string(self) -> str | Generator[Any, None, None]:\n        \"\"\"Convert input data to string with proper error handling.\"\"\"\n        self._validate_input()\n        if isinstance(self.input_value, list):\n            clean_data: bool = getattr(self, \"clean_data\", False)\n            return \"\\n\".join([safe_convert(item, clean_data=clean_data) for item in self.input_value])\n        if isinstance(self.input_value, Generator):\n            return self.input_value\n        return safe_convert(self.input_value)\n"
+              },
+              "context_id": {
+                "_input_type": "MessageTextInput",
+                "advanced": true,
+                "display_name": "Context ID",
+                "dynamic": false,
+                "info": "The context ID of the chat. Adds an extra layer to the local memory.",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "context_id",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": ""
+              },
+              "data_template": {
+                "_input_type": "MessageTextInput",
+                "advanced": true,
+                "display_name": "Data Template",
+                "dynamic": false,
+                "info": "Template to convert Data to Text. If left empty, it will be dynamically set to the Data's text key.",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "data_template",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "{text}"
+              },
+              "input_value": {
+                "_input_type": "HandleInput",
+                "advanced": false,
+                "display_name": "Inputs",
+                "dynamic": false,
+                "info": "Message to be passed as output.",
+                "input_types": [
+                  "Data",
+                  "DataFrame",
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "name": "input_value",
+                "override_skip": false,
+                "placeholder": "",
+                "required": true,
+                "show": true,
+                "title_case": false,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "other",
+                "value": ""
+              },
+              "sender": {
+                "_input_type": "DropdownInput",
+                "advanced": true,
+                "combobox": false,
+                "dialog_inputs": {},
+                "display_name": "Sender Type",
+                "dynamic": false,
+                "external_options": {},
+                "info": "Type of sender.",
+                "name": "sender",
+                "options": [
+                  "Machine",
+                  "User"
+                ],
+                "options_metadata": [],
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "toggle": false,
+                "tool_mode": false,
+                "trace_as_metadata": true,
+                "track_in_telemetry": true,
+                "type": "str",
+                "value": "Machine"
+              },
+              "sender_name": {
+                "_input_type": "MessageTextInput",
+                "advanced": true,
+                "display_name": "Sender Name",
+                "dynamic": false,
+                "info": "Name of the sender.",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "sender_name",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": "AI"
+              },
+              "session_id": {
+                "_input_type": "MessageTextInput",
+                "advanced": true,
+                "display_name": "Session ID",
+                "dynamic": false,
+                "info": "The session ID of the chat. If empty, the current session ID parameter will be used.",
+                "input_types": [
+                  "Message"
+                ],
+                "list": false,
+                "list_add_label": "Add More",
+                "load_from_db": false,
+                "name": "session_id",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_input": true,
+                "trace_as_metadata": true,
+                "track_in_telemetry": false,
+                "type": "str",
+                "value": ""
+              },
+              "should_store_message": {
+                "_input_type": "BoolInput",
+                "advanced": true,
+                "display_name": "Store Messages",
+                "dynamic": false,
+                "info": "Store the message in the history.",
+                "list": false,
+                "list_add_label": "Add More",
+                "name": "should_store_message",
+                "override_skip": false,
+                "placeholder": "",
+                "required": false,
+                "show": true,
+                "title_case": false,
+                "tool_mode": false,
+                "trace_as_metadata": true,
+                "track_in_telemetry": true,
+                "type": "bool",
+                "value": true
+              }
+            },
+            "tool_mode": false
+          },
+          "showNode": true,
+          "type": "ChatOutput"
+        },
+        "dragging": false,
+        "id": "ChatOutput-Y1teN",
+        "measured": {
+          "height": 136,
+          "width": 320
+        },
+        "position": {
+          "x": 1856.0808745713932,
+          "y": 320.236840975189
+        },
+        "selected": true,
+        "type": "genericNode"
+      }
+    ],
+    "viewport": {
+      "x": -323.5578543716142,
+      "y": -11.736754536155843,
+      "zoom": 0.4832530837546373
+    }
+  },
+  "description": "Catalyzing Business Growth through Conversational AI.",
+  "endpoint_name": null,
+  "id": "abd2ad6f-c55e-4e86-a70c-a93ff5a6fc0b",
+  "is_component": false,
+  "last_tested_version": "1.7.3",
+  "name": "MedAgent_AI_langflow",
+  "tags": []
+}
