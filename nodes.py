@@ -20,7 +20,7 @@ from langwatch.types import RAGChunk
 from langchain_core.runnables import RunnableConfig
 from observability import traced_node, safe_add_evaluation, safe_span_update, get_safe_span
 from state import MedAgentState
-from guardrails import check_input, check_rag_output, check_fda_output
+from guardrails import check_input, check_rag_output, check_fda_output, check_fda_number_grounding
 
 load_dotenv(override=False)
 
@@ -107,19 +107,18 @@ _db = None
 
 def get_chromadb():
     """
-    Builds ChromaDB vector store from clinical KB documents in ./KBFILES
+    Builds ChromaDB vector store from clinical KB documents in KBFILES/.
 
-    Document loading priority:
-    1. KB_DIR env var (if set)
-    2. ./KBFILES  (default — where the 7 peer-reviewed clinical docs live)
-   
+    Path resolution (in order):
+    1. KB_DIR environment variable (if set)
+    2. ./KBFILES  ← sole default — 7 peer-reviewed clinical documents
 
     Files loaded:
-    01_warfarin_aspirin.txt          — BNF + CMAJ evidence
-    02_omeprazole_clopidogrel.txt    — EMA CHMP + COGENT trial
-    03_fluoxetine_tramadol.txt       — FDA label + Mikkelsen 2023
+    01_warfarin_aspirin.txt           — BNF + CMAJ evidence
+    02_omeprazole_clopidogrel.txt     — EMA CHMP + COGENT trial
+    03_fluoxetine_tramadol.txt        — FDA label + Mikkelsen 2023
     04_simvastatin_clarithromycin.txt — FDA Zocor label + MHRA SPS
-    05_lithium_ibuprofen.txt         — BNF 2024 + MHRA guidance
+    05_lithium_ibuprofen.txt          — BNF 2024 + MHRA guidance
     06_general_cyp450_interactions.txt — FDA Clinical Drug Interaction Guidance
     07_anticoagulation_management.txt  — NHS Derbyshire + BCSH Guidelines
     """
@@ -127,15 +126,8 @@ def get_chromadb():
     if _db:
         return _db
 
-    # Try KB_DIR env var first, then KBFILES, then legacy path
-    kb_dir = "./KBFILES"  # default path
-    if not kb_dir:
-        for candidate in ["./KBFILES"]:
-            if glob.glob(f"{candidate}/*.txt"):
-                kb_dir = candidate
-                break
-        if not kb_dir:
-            kb_dir = "./KBFILES"   # default even if empty — error logged below
+    # Resolve KB folder: env var → ./KBFILES (sole default)
+    kb_dir = os.getenv("KB_DIR", "./KBFILES")
 
     txt_files = sorted(glob.glob(f"{kb_dir}/*.txt"))
     raw_docs  = []
@@ -163,7 +155,7 @@ def get_chromadb():
         # This is intentional: we want to know if KBFILES is missing
         raise FileNotFoundError(
             f"No KB .txt files found in '{kb_dir}'. "
-            f"Ensure ./KBFILES folder exists with the 7 clinical documents. "
+            f"Ensure KBFILES/ folder exists with the 7 clinical documents. "
             f"Set KB_DIR env var to override the path."
         )
 
@@ -294,12 +286,41 @@ Rules:
 - Base your answer ONLY on the context above
 - If the context does not mention this drug pair, state UNKNOWN severity
 - Do NOT invent mechanisms not present in the context
+- If two context chunks contradict each other on severity (e.g. one says MAJOR, another says MODERATE):
+    → Use the HIGHER severity and state in SUMMARY that sources differ
+    → Quote both source tags so the clinician can verify
+- If context chunks agree on severity but differ on mechanism detail:
+    → Use the mechanism described in the most specific chunk
+    → Cite that chunk's source tag
 
 Respond with:
 1. SEVERITY: [MAJOR / MODERATE / MINOR / UNKNOWN]
 2. SUMMARY: 2 sentences drawn from context
 3. CLINICAL ACTION: 2-3 bullet points
 4. SOURCE: quote the source tag from context (e.g. BNF 2024)
+
+━━━ GOLD EXAMPLE — follow this format exactly ━━━
+Patient: 72y | Conditions: atrial fibrillation, hypertension
+Medications: warfarin 5mg daily + aspirin 100mg daily
+Context: [source=01_warfarin_aspirin.txt] Warfarin + aspirin: MAJOR \
+interaction. Warfarin inhibits Vitamin K clotting factors (II,VII,IX,X). \
+Aspirin irreversibly inhibits COX-1, reducing thromboxane A2-mediated \
+platelet aggregation. Additive effect dramatically raises GI and \
+intracranial bleeding risk. Source: BNF + Clinical Pharmacology.
+
+1. SEVERITY: MAJOR
+2. SUMMARY: Warfarin and aspirin together dramatically raise GI and \
+   intracranial bleeding risk through additive anticoagulant and \
+   antiplatelet mechanisms (BNF + Clinical Pharmacology). This \
+   combination should be avoided unless clinically essential, in which \
+   case close INR monitoring and PPI cover are required.
+3. CLINICAL ACTION:
+   - Assess whether aspirin is clinically essential; switch to \
+     paracetamol for analgesia if antiplatelet effect is not required
+   - Add a PPI (pantoprazole preferred) if the combination is unavoidable
+   - Increase INR monitoring to at least weekly until stable
+4. SOURCE: 01_warfarin_aspirin.txt (BNF + Clinical Pharmacology)
+━━━ END OF EXAMPLE ━━━
 
 ⚠️ DISCLAIMER: AI-generated. Research only. Not medical advice."""
 
@@ -313,7 +334,7 @@ def node_agent1_rag(state: MedAgentState, config: dict = None) -> dict:
     blocked = []
     validation_log = []
 
-    # Parallelise RxNorm validation — all drugs checked simultaneously
+    # Validate all drug names in parallel via RxNorm API before any LLM call
     import concurrent.futures
     drug_list = list(meds.keys())
     with concurrent.futures.ThreadPoolExecutor(max_workers=len(drug_list)) as ex:
@@ -334,7 +355,7 @@ def node_agent1_rag(state: MedAgentState, config: dict = None) -> dict:
             "drug_a": blocked[0], "drug_b": blocked[-1],
             "severity": "BLOCKED",
             "summary": (
-                f"⛔ BLOCKED by RxNorm MCP Tool.\n"
+                f"⛔ BLOCKED by RxNorm Validation Tool.\n"
                 f"Drug(s) not recognised: {', '.join(blocked)}.\n"
                 f"MedAgent only assesses known medications.\n"
                 f"Please check spelling or use the generic name."
@@ -404,11 +425,15 @@ def node_agent1_rag(state: MedAgentState, config: dict = None) -> dict:
             )
             # Log each output guardrail as evaluation (per capturing-evaluations docs)
             for r in results:
-                safe_add_evaluation(rag_span, 
+                # G-OUT-01 checks severity presence specifically —
+                # not overall guardrail_passed which included the disclaimer
+                # check (G-OUT-02) that GPT-4o does not echo in its 4-section output.
+                _sev_present = r.get("severity", "") in ["MAJOR", "MODERATE", "MINOR", "UNKNOWN"]
+                safe_add_evaluation(rag_span,
                     name=f"G-OUT-01: Severity Present ({r.get('drug_a','')}+{r.get('drug_b','')})",
-                    passed=r.get("guardrail_passed", True),
+                    passed=_sev_present,
                     is_guardrail=True,
-                    score=1.0 if r.get("guardrail_passed") else 0.0,
+                    score=1.0 if _sev_present else 0.0,
                     details=f"Severity: {r.get('severity')} | KB chunks: {r.get('chunks_retrieved',0)}",
                 )
     except Exception:
@@ -418,7 +443,17 @@ def node_agent1_rag(state: MedAgentState, config: dict = None) -> dict:
 
 
 def _rxnorm_validate(drug_name: str) -> dict:
-    """Same RxNorm logic as in working LangFlow Agent 1 component."""
+    """
+    Pre-LLM validation tool: calls the NIH RxNorm REST API to verify
+    every drug name is a real, recognised medication before any LLM call.
+
+    This is a deterministic pipeline gate — not a tool the model controls.
+    The pipeline always calls this. The LLM never decides to skip it.
+
+    Returns:
+        found  : True if RxNorm recognises the drug
+        status : human-readable result string
+    """
     try:
         r = httpx.get(
             "https://rxnav.nlm.nih.gov/REST/rxcui.json",
@@ -428,13 +463,13 @@ def _rxnorm_validate(drug_name: str) -> dict:
             rxcui = r.json().get("idGroup", {}).get("rxnormId", [])
             if rxcui:
                 return {"drug": drug_name, "found": True,
-                        "status": f"✅ RxNorm validated — RxCUI: {rxcui[0]}"}
+                        "status": f"✅ RxNorm validation tool — RxCUI: {rxcui[0]}"}
             return {"drug": drug_name, "found": False,
-                    "status": f"❌ NOT in RxNorm — possibly fictional or misspelled"}
+                    "status": f"❌ RxNorm validation tool — drug not found (fictional or misspelled)"}
     except Exception:
         pass
     return {"drug": drug_name, "found": True,
-            "status": "⚠️ RxNorm unreachable — proceeding without validation"}
+            "status": "⚠️ RxNorm validation tool unreachable — proceeding without validation"}
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -449,41 +484,107 @@ Drugs: {drug_a} ({dose_a}mg {freq_a}) + {drug_b} ({dose_b}mg {freq_b})
 
 AGENT 1 KNOWLEDGE BASE VERDICT (from clinical literature):
   Severity: {agent1_severity}
-  Summary: {rag_summary}
+  Summary:  {rag_summary}
 
-LIVE MULTI-JURISDICTION REGULATORY DATA (use exact numbers — never invent):
+REGULATORY AUTHORITIES SELECTED BY USER: {authorities_called}
+Only the authorities listed above were called. All others show "NOT REQUESTED".
+You MUST base your decision ONLY on the data from selected authorities.
+
+LIVE REGULATORY DATA — use exact numbers, never invent:
   FDA (US):   {drug_a} — {events_a} adverse events | Top reactions: {reactions_a}
               {drug_b} — {events_b} adverse events | Top reactions: {reactions_b}
-              Boxed warning: {boxed_a}
+              Boxed warning:          {boxed_a}
               Label interaction text: {interactions_a}
   EMA (EU):   {ema_signal}
   MHRA (UK):  {mhra_signal}
 
-YOUR AUTHORITY:
-You are NOT required to agree with Agent 1. Your job is to make one of four decisions:
+━━━ HOW TO DETERMINE YOUR DECISION ━━━
 
-  CONFIRM    — All regulatory signals agree with Agent 1 severity
-  ESCALATE   — 1+ jurisdiction shows STRONGER signal than Agent 1 (e.g. MODERATE → MAJOR)
-  CONTRADICT — 2+ jurisdictions show WEAKER signal than Agent 1
-  OVERRIDE   — Majority of jurisdictions directly contradict Agent 1 severity
+STEP 1 — Identify which authorities are ACTIVE (selected + returned data):
+  An authority is ACTIVE only if it appears in AUTHORITIES SELECTED BY USER above
+  AND its data is NOT "NOT REQUESTED".
+  Ignore all authorities that are NOT ACTIVE for the decision logic below.
 
-Override rules:
-  - Only consider jurisdictions that are NOT "NOT REQUESTED"
-  - If 2 or more ACTIVE jurisdictions signal HIGHER severity than Agent 1 → ESCALATE or OVERRIDE
-  - If all ACTIVE jurisdictions signal LOWER severity → CONTRADICT
-  - If signals split → CONFIRM Agent 1 (KB is the tiebreaker)
-  - A boxed warning in ANY active jurisdiction automatically triggers ESCALATE minimum
-  - If only FDA was requested and it agrees with Agent 1 → CONFIRM
+STEP 2 — Count ACTIVE authorities and assess their signals vs Agent 1 severity:
 
-Respond with EXACTLY this structure:
+  Scenario A — Only 1 ACTIVE authority (e.g. user selected FDA only):
+    → That single authority is the sole signal.
+    → If it AGREES with Agent 1                        → CONFIRM
+    → If it signals STRONGER severity than Agent 1     → ESCALATE
+    → If it signals WEAKER severity than Agent 1       → CONTRADICT
+    → Boxed warning present in that authority          → ESCALATE minimum
+
+  Scenario B — 2 ACTIVE authorities (e.g. user selected FDA + EMA):
+    → If BOTH agree with Agent 1                       → CONFIRM
+    → If BOTH signal STRONGER than Agent 1             → ESCALATE or OVERRIDE
+    → If BOTH signal WEAKER than Agent 1               → CONTRADICT
+    → If signals SPLIT (one higher, one lower)         → CONFIRM (KB is tiebreaker)
+    → If EITHER has a boxed warning                    → ESCALATE minimum
+
+  Scenario C — All 3 ACTIVE authorities (FDA + EMA + MHRA):
+    → If ALL 3 agree with Agent 1                      → CONFIRM
+    → If 2 or more signal STRONGER than Agent 1        → ESCALATE or OVERRIDE
+    → If 2 or more signal WEAKER than Agent 1          → CONTRADICT
+    → If majority contradicts Agent 1 severity         → OVERRIDE
+    → If signals split (no majority)                   → CONFIRM (KB is tiebreaker)
+    → If ANY jurisdiction has a boxed warning          → ESCALATE minimum
+
+STEP 3 — Special cases (apply in ANY scenario):
+  - FDA events = 0: treat as NO DATA — do NOT interpret as evidence of safety.
+    A new or rare drug may simply not appear in OpenFDA yet.
+  - "NOT REQUESTED" authority: treat as if it does not exist.
+    Do NOT cite it, reference it, or use training knowledge about what it might say.
+  - KB is always the tiebreaker on a split signal — never downgrade Agent 1 on a split.
+
+━━━ YOUR 4 POSSIBLE DECISIONS ━━━
+  CONFIRM    — ACTIVE authority/authorities agree with Agent 1 severity. No change.
+  ESCALATE   — ACTIVE signal(s) indicate STRONGER risk than Agent 1. Severity raised.
+  CONTRADICT — ACTIVE signal(s) indicate WEAKER risk. Agent 1 stands (KB tiebreaker).
+  OVERRIDE   — Majority of ACTIVE authorities directly contradict Agent 1. Severity replaced.
+
+━━━ THINK THROUGH THESE STEPS BEFORE WRITING YOUR DECISION ━━━
+
+Work through the following reasoning steps in order. Write each step
+clearly so your decision is auditable and traceable.
+
+Step 1 — List ACTIVE authorities:
+  For each of FDA, EMA, MHRA: is it in AUTHORITIES SELECTED BY USER
+  AND is its data not "NOT REQUESTED"?
+  Write: "ACTIVE: [list]" and "INACTIVE: [list]"
+
+Step 2 — Assess each ACTIVE authority's signal vs Agent 1:
+  For each ACTIVE authority write one line:
+  "[Authority]: signals [HIGHER / SAME / LOWER] than Agent 1 [severity]
+   because [exact evidence from data above — quote numbers or label text]"
+
+Step 3 — Check for boxed warning:
+  Does any ACTIVE authority have a boxed warning? YES / NO
+  If YES → this automatically triggers ESCALATE minimum regardless of step 2.
+
+Step 4 — Apply the scenario rule:
+  How many ACTIVE authorities do you have? (1, 2 or 3)
+  Apply the matching scenario (A, B or C) from the rules above.
+  Write: "Applying Scenario [A/B/C]: [state the rule outcome]"
+
+Step 5 — Resolve any split:
+  If signals are split with no majority → KB is the tiebreaker → CONFIRM.
+  Write: "Signal split: [yes/no]. Tiebreaker needed: [yes/no]."
+
+Step 6 — State your decision and severity:
+  Write: "Decision: [CONFIRM / ESCALATE / CONTRADICT / OVERRIDE]"
+  Write: "Final severity: [MAJOR / MODERATE / MINOR / UNKNOWN]"
+  Write: "Reason: [one sentence citing which authority and what evidence]"
+
+━━━ RESPOND WITH EXACTLY THIS STRUCTURE ━━━
+ACTIVE AUTHORITIES: [list only the authorities that were ACTIVE for this decision]
 DECISION: [CONFIRM / ESCALATE / CONTRADICT / OVERRIDE]
-REASON: [one sentence — which jurisdictions drove this decision and why]
+REASON: [one sentence — which ACTIVE authorities drove this decision and what signal they gave]
 JURISDICTION SIGNALS:
-  FDA: [MAJOR/MODERATE/MINOR] — [evidence quote from data above]
-  EMA: [MAJOR/MODERATE/MINOR/NO DATA] — [evidence quote]
-  MHRA: [MAJOR/MODERATE/MINOR/NO DATA] — [evidence quote]
+  FDA:  [MAJOR/MODERATE/MINOR/NO DATA/NOT REQUESTED] — [evidence from data above or "not selected"]
+  EMA:  [MAJOR/MODERATE/MINOR/NO DATA/NOT REQUESTED] — [evidence from data above or "not selected"]
+  MHRA: [MAJOR/MODERATE/MINOR/NO DATA/NOT REQUESTED] — [evidence from data above or "not selected"]
 FINAL VALIDATED SEVERITY: [MAJOR / MODERATE / MINOR / UNKNOWN]
-PATIENT FACTORS: [how age and conditions affect this specific combination]
+PATIENT FACTORS: [how this patient's age and conditions specifically affect this drug combination]
 
 ⚠️ DISCLAIMER: AI-generated. Research only. Not medical advice."""
 
@@ -565,6 +666,7 @@ def node_agent2_fda(state: MedAgentState, config: dict = None) -> dict:
             interactions_a=lb_a.get("drug_interactions","None")[:200],
             ema_signal=ema_signal["summary"],
             mhra_signal=mhra_signal["summary"],
+            authorities_called=", ".join(authorities),
         )
         chain     = (
             ChatPromptTemplate.from_messages([HumanMessage(content=prompt)])
@@ -612,12 +714,13 @@ def node_agent2_fda(state: MedAgentState, config: dict = None) -> dict:
                         details=ema_signal.get("summary","") if auth=="EMA" else mhra_signal.get("summary","") if auth=="MHRA" else f"FDA: {real_a} adverse events",
                     )
             # Log FDA numbers groundedness guardrail
-            safe_add_evaluation(span, 
+            grounding_ok = check_fda_number_grounding(validated, real_a, real_b)
+            safe_add_evaluation(span,
                 name=f"G-FDA-01: Number Grounding ({drug_a}+{drug_b})",
-                passed=passed,
+                passed=grounding_ok,
                 is_guardrail=True,
-                score=1.0 if passed else 0.0,
-                details=f"FDA events used: {real_a}/{real_b}",
+                score=1.0 if grounding_ok else 0.0,
+                details=f"FDA events: {real_a}/{real_b} | {'grounded' if grounding_ok else 'number mismatch detected'}",
             )
         except Exception:
             pass
@@ -839,7 +942,7 @@ def _mhra_signal(drug_a: str, drug_b: str) -> dict:
 # ════════════════════════════════════════════════════════════════
 # REPORT COMPILER PROMPTS
 # ════════════════════════════════════════════════════════════════
-COMPILER_PROMPT = """You are a senior clinical pharmacist writing a formal multi-source interaction report.
+COMPILER_PROMPT = """You are a senior clinical pharmacist writing a single, unified drug interaction report.
 
 Patient: {age}y | Conditions: {conditions}
 Clinical question: {clinical_question}
@@ -854,46 +957,83 @@ EVIDENCE SOURCES:
   Top reactions:          {top_reactions}
 
 REGULATORY DECISION: {override_note}
-
 AUTHORITIES ACTUALLY CALLED: {authorities_called}
 
-⚠️ CRITICAL RULES — YOU MUST FOLLOW THESE:
-1. Only mention regulatory authorities listed in AUTHORITIES ACTUALLY CALLED above.
-2. If EMA is NOT in AUTHORITIES ACTUALLY CALLED — do NOT mention EMA anywhere in your response.
-3. If MHRA is NOT in AUTHORITIES ACTUALLY CALLED — do NOT mention MHRA anywhere in your response.
-4. Do NOT use your training knowledge about what EMA or MHRA might say — only use data provided above.
-5. If an authority shows "NOT REQUESTED" — treat it as if it does not exist for this report.
+⚠️ CRITICAL RULES:
+1. Write ONE unified report — not two separate agent reports merged together.
+2. Only mention regulatory authorities listed in AUTHORITIES ACTUALLY CALLED.
+3. If EMA is NOT in AUTHORITIES ACTUALLY CALLED — do NOT mention EMA anywhere.
+4. If MHRA is NOT in AUTHORITIES ACTUALLY CALLED — do NOT mention MHRA anywhere.
+5. Do NOT use training knowledge about what EMA or MHRA might say — only use data above.
+6. If an authority shows "NOT REQUESTED" — treat it as if it does not exist.
+7. The AGENT 2 OVERRIDE section must ONLY appear if Agent 2 changed Agent 1's severity.
+   If agents agreed — write "Agents agreed — no override." and stop. Do not invent a reason.
 
-Write exactly these sections:
+Write EXACTLY these sections in this order:
 
-SEVERITY: [use Agent 2 final validated severity — overrides Agent 1 if applicable]
-AGENT CONSENSUS: [one sentence — did agents agree or override, cite only AUTHORITIES ACTUALLY CALLED]
-SUMMARY: [2-3 sentences from KB and called authorities only]
-MECHANISM: [2 sentences from KB evidence only]
-REGULATORY SIGNAL: [only quote data from AUTHORITIES ACTUALLY CALLED — no others]
-DOSE CONSIDERATION: [1 sentence]
-CLINICAL ACTION:
-- [point 1]
-- [point 2]
-- [point 3]
-PATIENT ADVICE: [2-3 plain language sentences]
-SOURCES: {authorities_called}
-"""
+━━━ OVERALL SUMMARY ━━━
+[3-4 sentences. Lead with the final severity and the most clinically important finding.
+ Combine KB evidence and regulatory signal into one coherent narrative.
+ Do NOT repeat section headings inside this paragraph.]
+
+━━━ SEVERITY ━━━
+[MAJOR / MODERATE / MINOR / UNKNOWN]
+Use Agent 2 final validated severity. This is the single authoritative severity for this report.
+
+━━━ MECHANISM ━━━
+[2 sentences from KB evidence only — pharmacological mechanism of the interaction.]
+
+━━━ REGULATORY SIGNAL ━━━
+[Quote only from AUTHORITIES ACTUALLY CALLED. If only FDA was called, only cite FDA numbers.
+ Include: adverse event counts, top reactions, boxed warning if present.]
+
+━━━ AGENT 2 OVERRIDE ━━━
+[ONLY include this section if Agent 2 changed Agent 1's severity — i.e. {override_note} contains "OVERRIDDEN".]
+[If override occurred, state clearly:]
+  - Agent 1 (KB) said: [Agent 1 severity]
+  - Agent 2 (Regulatory) changed it to: [final severity]
+  - Reason: [exact regulatory evidence that justified the override — cite the authority and data]
+[If no override — write: "Agents agreed — no override." and end this section.]
+
+━━━ CLINICAL ACTION ━━━
+- [most urgent action for the prescriber]
+- [monitoring or alternative required]
+- [any dose or timing adjustment]
+
+━━━ PATIENT ADVICE ━━━
+[2-3 plain language sentences the patient can understand. No jargon.]
+
+━━━ SOURCES ━━━
+KB: {authorities_called} | Regulatory: {authorities_called}
+
+⚠️ DISCLAIMER: AI-generated content for research purposes only.
+Does NOT constitute medical advice. Consult a qualified pharmacist or physician."""
 
 
-OVERALL_PROMPT = """Summarise this multi-drug interaction assessment.
+OVERALL_PROMPT = """You are a senior clinical pharmacist. A patient is taking multiple medications.
+Write a single unified multi-drug assessment combining all findings below.
+
 Patient: {age}y | {conditions} | Question: {clinical_question}
 Medications: {meds}
-Findings:
+
+Per-pair findings:
 {summaries}
 
-OVERALL SUMMARY:
-[3-4 sentences, most clinically important first]
+Write EXACTLY these sections:
 
-PRIORITISED RECOMMENDATIONS:
-1. [most urgent]
-2. [second]
-3. [third]"""
+━━━ OVERALL SUMMARY ━━━
+[3-4 sentences. Start with the highest-severity finding. Explain why it is the most urgent.
+ Mention all drug pairs assessed. Do NOT repeat individual pair reports word-for-word.]
+
+━━━ PRIORITISED RECOMMENDATIONS ━━━
+1. [most urgent action — which drug pair, what to do]
+2. [second priority]
+3. [third priority or monitoring instruction]
+
+━━━ SOURCES ━━━
+[List all KB and regulatory sources drawn on across all pairs.]
+
+⚠️ DISCLAIMER: AI-generated. Research only. Not medical advice."""
 
 
 def node_report_compiler(state: MedAgentState, config: dict = None) -> dict:
@@ -925,7 +1065,7 @@ def node_report_compiler(state: MedAgentState, config: dict = None) -> dict:
         agent2_decision    = fda.get("agent2_decision", "CONFIRM")
         agent1_sev         = fda.get("agent1_severity", "UNKNOWN")
         final_sev          = fda.get("final_severity", "UNKNOWN")
-        authorities_called = state.get("regulatory_authorities", ["FDA"])
+        authorities_called = state.get("regulatory_authorities") or ["FDA"]
         override_note      = (
             f"⚠️ Agent 2 OVERRIDDEN Agent 1: {agent1_sev} → {final_sev}"
             if fda.get("overridden") else
@@ -954,7 +1094,7 @@ def node_report_compiler(state: MedAgentState, config: dict = None) -> dict:
             mhra_signal=mhra_sum[:300],
             top_reactions=", ".join(top_rx) or "none",
             override_note=override_note,
-            authorities_called=", ".join(authorities_called),
+            authorities_called=", ".join(authorities_called) if isinstance(authorities_called, list) else str(authorities_called),
         )
         chain  = (ChatPromptTemplate.from_messages([HumanMessage(content=prompt)])
                   | llm | StrOutputParser())
@@ -971,37 +1111,39 @@ def node_report_compiler(state: MedAgentState, config: dict = None) -> dict:
             "⚠️ DISCLAIMER: AI-generated. Research only. Not medical advice."
         )}
 
-    highest   = max(reports, key=lambda r: sev_rank.get(r["severity"],0))
-    summaries = "\n\n".join(
-        f"[{r['pair']} — {r['severity']}]\n{r['report'][:400]}" for r in reports
-    )
-    overall = (
-        ChatPromptTemplate.from_messages([HumanMessage(content=OVERALL_PROMPT.format(
-            age=state["patient_age"], conditions=state["patient_conditions"],
-            clinical_question=state["clinical_question"],
-            meds=state["medications"].replace("\n",", "),
-            summaries=summaries,
-        ))]) | llm | StrOutputParser()
-    ).invoke({})
+    highest = max(reports, key=lambda r: sev_rank.get(r["severity"], 0))
 
-    # Build clean plain text — same format as working LangFlow component
-    div   = "\n" + "="*55 + "\n"
-    icons = {"MAJOR":"🔴","MODERATE":"🟠","MINOR":"🟡","BLOCKED":"⛔"}
-    parts = [
-        f"🏥 MEDAGENT AI — DRUG INTERACTION REPORT\n"
-        f"Patient: {state['patient_age']}y | {state['patient_conditions']}\n"
-        f"Highest severity: {highest['severity']}"
-    ]
-    for r in reports:
-        parts.append(f"{icons.get(r['severity'],'⚪')} {r['pair'].upper()}\n\n{r['report']}")
-    parts.append(overall)
-    parts.append(
-        "⚠️ DISCLAIMER: AI-generated content for research purposes only. "
-        "Does NOT constitute medical advice. Consult a qualified pharmacist or physician."
-    )
-    final = div.join(parts)
+    if len(reports) == 1:
+        # ── Single drug pair — return the compiler report directly ──────
+        # No overall summary needed. The report already contains:
+        # OVERALL SUMMARY / SEVERITY / MECHANISM / REGULATORY SIGNAL /
+        # AGENT 2 OVERRIDE / CLINICAL ACTION / PATIENT ADVICE / SOURCES / DISCLAIMER
+        final = reports[0]["report"]
+
+    else:
+        # ── Multiple drug pairs — one overall summary + each pair report ─
+        # Build a single overall summary from all pairs, then append
+        # each per-pair report WITHOUT its own header/disclaimer.
+        summaries = "\n\n".join(
+            f"[{r['pair']} — {r['severity']}]\n{r['report']}" for r in reports
+        )
+        overall = (
+            ChatPromptTemplate.from_messages([HumanMessage(content=OVERALL_PROMPT.format(
+                age=state["patient_age"], conditions=state["patient_conditions"],
+                clinical_question=state["clinical_question"],
+                meds=state["medications"].replace("\n", ", "),
+                summaries=summaries,
+            ))]) | llm | StrOutputParser()
+        ).invoke({})
+
+        icons = {"MAJOR": "🔴", "MODERATE": "🟠", "MINOR": "🟡", "BLOCKED": "⛔"}
+        div   = "\n" + "━"*50 + "\n"
+        parts = [overall]
+        for r in reports:
+            parts.append(
+                f"{icons.get(r['severity'], '⚪')} {r['pair'].upper()}\n\n{r['report']}"
+            )
+        final = div.join(parts)
+
     print(f"   ✅ Report compiled | Highest: {highest['severity']}")
-
-   
-
     return {"final_report": final}

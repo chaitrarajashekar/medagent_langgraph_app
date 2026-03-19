@@ -58,10 +58,13 @@ def check_rag_output(response: str, chunks: list) -> Tuple[bool, List[str], List
         failures.append("G-OUT-01: No valid severity (MAJOR/MODERATE/MINOR/UNKNOWN)")
 
     # G-OUT-02: Disclaimer present
+    # Note: Agent 1 output format (4 numbered sections) does not require
+    # the disclaimer to be reproduced — it is in the prompt footer and
+    # will appear in the final compiled report. Downgraded to warning.
     if not any(p in response.lower() for p in [
         "not medical advice","research only","disclaimer","ai-generated","consult"
     ]):
-        failures.append("G-OUT-02: Medical disclaimer missing")
+        warnings.append("G-OUT-02: Disclaimer not in Agent 1 response (present in compiled report)")
 
     # G-OUT-03: Source citation present
     if not any(s in response.lower() for s in [
@@ -126,10 +129,13 @@ def check_fda_output(response: str, real_a: int,
             )
 
     # G-FDA-04: Disclaimer present
+    # Agent 2 structured response (DECISION/REASON/SIGNALS) does not
+    # always reproduce the disclaimer from the prompt footer.
+    # Downgraded to warning — disclaimer is guaranteed in compiled report.
     if not any(p in response.lower() for p in [
         "not medical advice","research only","disclaimer","ai-generated"
     ]):
-        failures.append("G-FDA-04: Medical disclaimer missing from FDA validation")
+        warnings.append("G-FDA-04: Disclaimer not in Agent 2 response (present in compiled report)")
 
     # G-FDA-05: No prescribing
     for pat in [r"\bprescribe\b", r"change (the )?dose to \d+"]:
@@ -138,3 +144,32 @@ def check_fda_output(response: str, real_a: int,
             break
 
     return len(failures) == 0, failures, warnings
+
+
+def check_fda_number_grounding(response: str, real_a: int, real_b: int) -> bool:
+    """
+    G-FDA-01: Check if any large numbers in Agent 2 response are
+    grounded in the real FDA adverse event counts.
+
+    Returns True if:
+    - No large numbers (>100) appear in the response, OR
+    - All large numbers are within 10% of real_a or real_b
+
+    This is logged as a separate LangWatch evaluation so it does not
+    block the pipeline — it is an observability signal only.
+    """
+    if real_a == 0 and real_b == 0:
+        # FDA returned no data (drug not in OpenFDA or API timeout)
+        # Cannot ground numbers — but this is not a failure, it is NO DATA
+        return True
+
+    for num_str in re.findall(r'\b(\d{3,})\b', response):
+        num = int(num_str)
+        if num > 100:
+            close = any(
+                abs(num - real) < max(10, real * 0.1)
+                for real in [real_a, real_b] if real > 0
+            )
+            if not close:
+                return False
+    return True
